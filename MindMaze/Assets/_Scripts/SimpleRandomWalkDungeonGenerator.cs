@@ -8,12 +8,13 @@ using Random = UnityEngine.Random;
 public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
 {
     [SerializeField] public SimpleRandomWalkSO randomWalkParameters;
-    [SerializeField] private GameObject torchPrefab;    // Torch prefab
-    [SerializeField] private GameObject enemySpawner;  // Single EnemySpawner prefab
-    [SerializeField] private int torchPlacementFrequency = 5; // Place a torch every 5 tiles
-    [SerializeField] private int spawnerPlacementCount = 4; // Number of spawn points
+    [SerializeField] private GameObject torchPrefab;
+    [SerializeField] private GameObject enemySpawner;
+    [SerializeField] private int torchPlacementFrequency = 5;
+    [SerializeField] private int spawnerPlacementCount = 4;
 
-    private List<GameObject> spawnedObjects = new List<GameObject>(); // Track all spawned objects
+    private List<GameObject> spawnedObjects = new List<GameObject>();
+    private GameObject lightParent;
 
     protected override void RunProceduralGeneration()
     {
@@ -21,66 +22,96 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
 
         HashSet<Vector2Int> floorPositions = RunRandomWalk(randomWalkParameters, startPosition);
 
-        // Clear and paint floor tiles
         tilemapVisualizer.Clear();
         tilemapVisualizer.PaintFloorTiles(floorPositions);
-
-        // Generate walls
         WallGenerator.CreateWalls(floorPositions, tilemapVisualizer);
 
-        // Place torches
-        PlaceTorches(floorPositions);
+        SetupLightParent();
 
-        // Set up spawn points for the single EnemySpawner
+        PlaceTorches(floorPositions);
         SetupEnemySpawner(floorPositions);
+    }
+
+    private void SetupLightParent()
+    {
+        if (lightParent == null)
+        {
+            lightParent = GameObject.Find("Lights");
+            if (lightParent == null)
+            {
+                lightParent = new GameObject("Lights");
+            }
+        }
+
+        foreach (Transform child in lightParent.transform)
+        {
+#if UNITY_EDITOR
+            DestroyImmediate(child.gameObject);
+#else
+            Destroy(child.gameObject);
+#endif
+        }
     }
 
     private void PlaceTorches(HashSet<Vector2Int> floorPositions)
     {
         int counter = 0;
-
-        // Find all existing torches to reuse
         var existingTorches = spawnedObjects.Where(obj => obj != null && obj.name.StartsWith("Torch")).ToList();
         int reuseCount = 0;
 
         foreach (var position in floorPositions)
         {
-            // Ensure torches are placed only on floor tiles
-            if (counter % torchPlacementFrequency == 0)
+            if (counter % torchPlacementFrequency == 0 && IsAdjacentToWall(position, floorPositions))
             {
-                Vector3 worldPosition = new Vector3(position.x + 0.5f, position.y + 0.5f, 0); // Adjusted to center on tile
+                Vector3 worldPosition = new Vector3(position.x + 0.5f, position.y + 0.5f, 0);
 
                 if (reuseCount < existingTorches.Count)
                 {
-                    // Reuse an existing torch
                     existingTorches[reuseCount].transform.position = worldPosition;
                     existingTorches[reuseCount].SetActive(true);
                     reuseCount++;
                 }
                 else
                 {
-                    // Instantiate a new torch if needed
                     var torch = Instantiate(torchPrefab, worldPosition, Quaternion.identity);
-                    torch.name = "Torch"; // Ensure no "(Clone)" suffix
+                    torch.name = "Torch";
+                    torch.transform.parent = lightParent.transform;
                     spawnedObjects.Add(torch);
                 }
             }
             counter++;
         }
 
-        // Disable unused torches if any
         for (int i = reuseCount; i < existingTorches.Count; i++)
         {
             existingTorches[i].SetActive(false);
         }
     }
 
+    private bool IsAdjacentToWall(Vector2Int position, HashSet<Vector2Int> floorPositions)
+    {
+        var directions = new List<Vector2Int>
+        {
+            Vector2Int.up,
+            Vector2Int.down,
+            Vector2Int.left,
+            Vector2Int.right
+        };
+
+        foreach (var direction in directions)
+        {
+            if (!floorPositions.Contains(position + direction))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void SetupEnemySpawner(HashSet<Vector2Int> floorPositions)
     {
-        // Ensure the EnemySpawner exists
         if (enemySpawner == null) return;
 
-        // Check if a spawner instance already exists
         var existingSpawner = spawnedObjects.FirstOrDefault(obj => obj != null && obj.name == "EnemySpawner");
 
         GameObject spawnerInstance;
@@ -90,18 +121,16 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
         }
         else
         {
-            // Instantiate the spawner and track it
             spawnerInstance = Instantiate(enemySpawner, Vector3.zero, Quaternion.identity);
-            spawnerInstance.name = "EnemySpawner"; // Ensure no "(Clone)" suffix
+            spawnerInstance.name = "EnemySpawner";
             spawnedObjects.Add(spawnerInstance);
         }
 
         var spawnerScript = spawnerInstance.GetComponent<EenemySpawner>();
         if (spawnerScript == null) return;
 
-        // Set up spawn points
-        var spawnPoints = spawnerScript.spawnPoints; // Reference existing spawn points list
-        spawnPoints.Clear(); // Clear existing points if any
+        var spawnPoints = spawnerScript.spawnPoints;
+        spawnPoints.Clear();
 
         var floorList = floorPositions.ToList();
 
@@ -109,31 +138,29 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
         {
             if (floorList.Count == 0) break;
 
-            // Randomly select a valid floor tile
             Vector2Int spawnPosition = floorList[Random.Range(0, floorList.Count)];
-            Vector3 worldPosition = new Vector3(spawnPosition.x + 0.5f, spawnPosition.y + 0.5f, 0); // Adjusted to center on tile
+            if (IsAdjacentToWall(spawnPosition, floorPositions)) continue;
 
-            // Check if we already have a child spawn point, or create one if needed
+            Vector3 worldPosition = new Vector3(spawnPosition.x + 0.5f, spawnPosition.y + 0.5f, 0);
+
             GameObject spawnPoint;
             if (i < spawnerInstance.transform.childCount)
             {
                 spawnPoint = spawnerInstance.transform.GetChild(i).gameObject;
-                spawnPoint.transform.position = worldPosition; // Update position
+                spawnPoint.transform.position = worldPosition;
                 spawnPoint.SetActive(true);
             }
             else
             {
-                // Create a new spawn point under the spawner
                 spawnPoint = new GameObject($"SpawnPoint_{i}");
                 spawnPoint.transform.position = worldPosition;
-                spawnPoint.transform.parent = spawnerInstance.transform; // Parent to spawner
+                spawnPoint.transform.parent = spawnerInstance.transform;
             }
 
-            spawnPoints.Add(spawnPoint); // Add to spawn points list
-            floorList.Remove(spawnPosition); // Avoid duplicate spawn points
+            spawnPoints.Add(spawnPoint);
+            floorList.Remove(spawnPosition);
         }
 
-        // Disable unused spawn points if any
         for (int i = spawnerPlacementCount; i < spawnerInstance.transform.childCount; i++)
         {
             spawnerInstance.transform.GetChild(i).gameObject.SetActive(false);
@@ -142,15 +169,14 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
 
     private void ClearPreviousGeneration()
     {
-        // Destroy all previously spawned objects and clear the list
         foreach (var obj in spawnedObjects)
         {
             if (obj != null)
             {
 #if UNITY_EDITOR
-                DestroyImmediate(obj); // Editor mode
+                DestroyImmediate(obj);
 #else
-                Destroy(obj); // Play mode
+                Destroy(obj);
 #endif
             }
         }
