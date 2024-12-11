@@ -13,7 +13,7 @@ public class EenemySpawner : MonoBehaviour
     [SerializeField]
     private int count = 20;
     [SerializeField]
-    private float minDelay = 0.8f, maxDelay = 1.5f;
+    private float minDelay = 5f, maxDelay = 5f;
 
     IEnumerator SpawnCoroutine()
     {
