@@ -9,7 +9,8 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
 {
     [SerializeField] public SimpleRandomWalkSO randomWalkParameters;
     [SerializeField] private GameObject torchPrefab;    // Torch prefab
-    [SerializeField] private GameObject enemySpawner;  // Single EnemySpawner prefab
+    [SerializeField] private GameObject enemySpawner;// Single EnemySpawner prefab
+    [SerializeField] private GameObject player;
     [SerializeField] private int torchPlacementFrequency = 5; // Place a torch every 5 tiles
     [SerializeField] private int spawnerPlacementCount = 4; // Number of spawn points
 
@@ -28,6 +29,8 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
         // Generate walls
         WallGenerator.CreateWalls(floorPositions, tilemapVisualizer);
 
+        PlacePlayer(floorPositions);
+
         // Place torches
         PlaceTorches(floorPositions);
 
@@ -35,6 +38,14 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
         SetupEnemySpawner(floorPositions);
     }
 
+
+    private void PlacePlayer(HashSet<Vector2Int> floorPositions)
+    {
+        var floorList = floorPositions.ToList();
+        Vector3 pos = GetRandomSpawnPosition(floorList);
+        player.transform.position = pos;
+
+    }
     private void PlaceTorches(HashSet<Vector2Int> floorPositions)
     {
         int counter = 0;
@@ -77,68 +88,70 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
 
     private void SetupEnemySpawner(HashSet<Vector2Int> floorPositions)
     {
-        // Ensure the EnemySpawner exists
+        // Exit early if no enemy spawner is defined
         if (enemySpawner == null) return;
 
-        // Check if a spawner instance already exists
-        var existingSpawner = spawnedObjects.FirstOrDefault(obj => obj != null && obj.name == "EnemySpawner");
-
-        GameObject spawnerInstance;
-        if (existingSpawner != null)
-        {
-            spawnerInstance = existingSpawner;
-        }
-        else
-        {
-            // Instantiate the spawner and track it
-            spawnerInstance = Instantiate(enemySpawner, Vector3.zero, Quaternion.identity);
-            spawnerInstance.name = "EnemySpawner"; // Ensure no "(Clone)" suffix
-            spawnedObjects.Add(spawnerInstance);
-        }
-
-        var spawnerScript = spawnerInstance.GetComponent<EenemySpawner>();
+        var spawnerScript = enemySpawner.GetComponent<EenemySpawner>();
         if (spawnerScript == null) return;
 
-        // Set up spawn points
-        var spawnPoints = spawnerScript.spawnPoints; // Reference existing spawn points list
-        spawnPoints.Clear(); // Clear existing points if any
+        ConfigureSpawnPoints(enemySpawner, spawnerScript, floorPositions);
+    }
+
+    private void ConfigureSpawnPoints(GameObject spawnerInstance, EenemySpawner spawnerScript, HashSet<Vector2Int> floorPositions)
+    {
+        var spawnPoints = spawnerScript.spawnPoints;
+        spawnPoints.Clear(); // Reset existing spawn points
 
         var floorList = floorPositions.ToList();
+        int childCount = spawnerInstance.transform.childCount;
 
-        for (int i = 0; i < spawnerPlacementCount; i++)
+        for (int i = 0; i < spawnerPlacementCount && floorList.Count > 0; i++)
         {
-            if (floorList.Count == 0) break;
+            Vector3 worldPosition = GetRandomSpawnPosition(floorList);
 
-            // Randomly select a valid floor tile
-            Vector2Int spawnPosition = floorList[Random.Range(0, floorList.Count)];
-            Vector3 worldPosition = new Vector3(spawnPosition.x + 0.5f, spawnPosition.y + 0.5f, 0); // Adjusted to center on tile
+            GameObject spawnPoint = i < childCount
+                ? ReuseSpawnPoint(spawnerInstance.transform.GetChild(i).gameObject, worldPosition)
+                : CreateNewSpawnPoint(spawnerInstance, i, worldPosition);
 
-            // Check if we already have a child spawn point, or create one if needed
-            GameObject spawnPoint;
-            if (i < spawnerInstance.transform.childCount)
-            {
-                spawnPoint = spawnerInstance.transform.GetChild(i).gameObject;
-                spawnPoint.transform.position = worldPosition; // Update position
-                spawnPoint.SetActive(true);
-            }
-            else
-            {
-                // Create a new spawn point under the spawner
-                spawnPoint = new GameObject($"SpawnPoint_{i}");
-                spawnPoint.transform.position = worldPosition;
-                spawnPoint.transform.parent = spawnerInstance.transform; // Parent to spawner
-            }
-
-            spawnPoints.Add(spawnPoint); // Add to spawn points list
-            floorList.Remove(spawnPosition); // Avoid duplicate spawn points
+            spawnPoints.Add(spawnPoint);
         }
 
-        // Disable unused spawn points if any
-        for (int i = spawnerPlacementCount; i < spawnerInstance.transform.childCount; i++)
+        DisableExtraSpawnPoints(spawnerInstance, spawnerPlacementCount);
+    }
+
+    private Vector3 GetRandomSpawnPosition(List<Vector2Int> floorList)
+    {
+        int index = Random.Range(0, floorList.Count);
+        Vector2Int spawnPosition = floorList[index];
+        floorList.RemoveAt(index);
+        return new Vector3(spawnPosition.x + 0.5f, spawnPosition.y + 0.5f, 0); // Centered position
+    }
+
+    private GameObject ReuseSpawnPoint(GameObject spawnPoint, Vector3 worldPosition)
+    {
+        spawnPoint.transform.position = worldPosition;
+        spawnPoint.SetActive(true);
+        return spawnPoint;
+    }
+
+    private GameObject CreateNewSpawnPoint(GameObject spawnerInstance, int index, Vector3 worldPosition)
+    {
+        GameObject spawnPoint = new GameObject($"SpawnPoint_{index}");
+        spawnPoint.transform.position = worldPosition;
+        spawnPoint.transform.parent = spawnerInstance.transform;
+        return spawnPoint;
+    }
+
+    private void DisableExtraSpawnPoints(GameObject spawnerInstance, int activeCount)
+    {
+        int childCount = spawnerInstance.transform.childCount;
+
+        for (int i = activeCount; i < childCount; i++)
         {
             spawnerInstance.transform.GetChild(i).gameObject.SetActive(false);
         }
     }
+
 
     private void ClearPreviousGeneration()
     {
