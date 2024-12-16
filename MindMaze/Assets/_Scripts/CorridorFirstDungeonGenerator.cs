@@ -9,16 +9,18 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
     [SerializeField]
     private int corridorLength = 14, corridorCount = 5;
     [SerializeField]
-    [Range(0.1f,1)]
+    [Range(0.1f, 1)]
     private float roomPercent = 0.8f;
 
     protected override void RunProceduralGeneration()
     {
+        ClearPreviousGeneration();
         CorridorFirstGeneration();
     }
 
     private void CorridorFirstGeneration()
     {
+        // Generate floor positions
         HashSet<Vector2Int> floorPositions = new HashSet<Vector2Int>();
         HashSet<Vector2Int> potentialRoomPositions = new HashSet<Vector2Int>();
 
@@ -32,16 +34,28 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
 
         floorPositions.UnionWith(roomPositions);
 
+        // Paint the floor and walls
         tilemapVisualizer.PaintFloorTiles(floorPositions);
         WallGenerator.CreateWalls(floorPositions, tilemapVisualizer);
 
+        // Place player
+        PlacePlayer(floorPositions);
+
+        // Place torches
+        PlaceTorches(floorPositions);
+
+        // Set up enemy spawners
+        SetupEnemySpawner(floorPositions);
+
+        // Place chests
+        PlaceChests(floorPositions);
     }
 
     private void CreateRoomsAtDeadEnd(List<Vector2Int> deadEnds, HashSet<Vector2Int> roomFloors)
     {
         foreach (var position in deadEnds)
         {
-            if(roomFloors.Contains(position) == false)
+            if (!roomFloors.Contains(position))
             {
                 var room = RunRandomWalk(randomWalkParameters, position);
                 roomFloors.UnionWith(room);
@@ -59,7 +73,6 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
             {
                 if (floorPositions.Contains(position + direction))
                     neighboursCount++;
-                
             }
             if (neighboursCount == 1)
                 deadEnds.Add(position);

@@ -7,6 +7,7 @@ public class Player : MonoBehaviour, IAgent, IHittable
 {
     [SerializeField]
     private int maxHealth = 2;
+    private int numberOfKey = 0;
 
     private int health;
     public int Health { 
@@ -25,6 +26,9 @@ public class Player : MonoBehaviour, IAgent, IHittable
     [field: SerializeField]
     public UIHealth uiHealth { get; set; }
 
+    [SerializeField]
+    private UIKey uiKey = null;
+
     [field: SerializeField]
     public UnityEvent OnDie { get; set; }
     [field: SerializeField]
@@ -36,6 +40,8 @@ public class Player : MonoBehaviour, IAgent, IHittable
     }
     private void Start()
     {
+        numberOfKey = 0;
+        uiKey.UdpateKeyText(numberOfKey);
         Health = maxHealth;
         uiHealth.Initialize(Health);
     }
@@ -54,6 +60,12 @@ public class Player : MonoBehaviour, IAgent, IHittable
         }
         
         
+    }
+    public void FindKey()
+    {
+        numberOfKey++;
+        uiKey.UdpateKeyText(numberOfKey);
+        Debug.Log("Key added! Total keys: " + numberOfKey);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
