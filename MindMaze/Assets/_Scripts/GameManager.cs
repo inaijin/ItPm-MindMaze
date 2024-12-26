@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1;
         SetCursorIcon();
     }
 
