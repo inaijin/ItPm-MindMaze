@@ -1,15 +1,18 @@
 ﻿<Properties StartupConfiguration="{4816E900-C8B7-51D9-9536-EE7AC6310B52}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/_Scripts/SimpleRandomWalkDungeonGenerator.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/_Scripts/GameManager.cs">
     <Files>
-      <File FileName="Assets/_Scripts/SimpleRandomWalkDungeonGenerator.cs" Line="123" Column="1" />
+      <File FileName="Assets/MainMenu.cs" Line="15" Column="28" />
+      <File FileName="Assets/PauseMenu.cs" Line="11" Column="30" />
+      <File FileName="Assets/_Scripts/GameManager.cs" Line="34" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="MindMaze" expanded="True">
-            <Node name="Assets" expanded="True" selected="True">
+            <Node name="Assets" expanded="True">
               <Node name="_Scripts" expanded="True">
                 <Node name="Enemies" expanded="True" />
+                <Node name="GameManager.cs" selected="True" />
               </Node>
               <Node name="_Sprites" expanded="True">
                 <Node name="Dungeon" expanded="True" />
@@ -23,7 +26,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="28d010f0-83ab-4e09-a988-db54954d68be" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="e9bbe2d4-e3fe-457c-936e-e4569be68bbd" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
