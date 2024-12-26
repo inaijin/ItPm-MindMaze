@@ -16,5 +16,10 @@ public abstract class AbstractDungeonGenerator : MonoBehaviour
         RunProceduralGeneration();
     }
 
+    public void Start()
+    {
+        GenerateDungeon();
+    }
+
     protected abstract void RunProceduralGeneration();
 }
