@@ -8,83 +8,103 @@ using Random = UnityEngine.Random;
 public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
 {
     [SerializeField] public SimpleRandomWalkSO randomWalkParameters;
-    [SerializeField] private GameObject torchPrefab;    // Torch prefab
-    [SerializeField] private GameObject enemySpawner;   // Single EnemySpawner prefab
-    [SerializeField] private GameObject chestPrefab;    // Chest prefab
+    [SerializeField] private GameObject torchPrefab;
+    [SerializeField] private GameObject enemySpawner;
+    [SerializeField] private GameObject chestPrefab;
+    [SerializeField] private GameObject npcPrefab;
     [SerializeField] private GameObject player;
 
-    [SerializeField] private int torchPlacementFrequency = 5; // Place a torch every 5 tiles
-    [SerializeField] private int spawnerPlacementCount = 4;   // Number of spawn points
-    [SerializeField] private int numberOfChests = 3;          // Number of chests to place
+    [SerializeField] private int torchPlacementFrequency = 5;
+    [SerializeField] private int spawnerPlacementCount = 4;
+    [SerializeField] private int numberOfChests = 3;
+    [SerializeField] private int numberOfNpcs = 2;
 
-    private List<GameObject> spawnedObjects = new List<GameObject>(); // Track all spawned objects
+    private List<GameObject> spawnedObjects = new List<GameObject>();
+    private HashSet<Vector2Int> occupiedPositions = new HashSet<Vector2Int>(); // Track occupied tiles
 
     protected override void RunProceduralGeneration()
     {
         ClearPreviousGeneration();
+        occupiedPositions.Clear(); // Clear occupied positions
 
         HashSet<Vector2Int> floorPositions = RunRandomWalk(randomWalkParameters, startPosition);
 
-        // Clear and paint floor tiles
         tilemapVisualizer.Clear();
         tilemapVisualizer.PaintFloorTiles(floorPositions);
-
-        // Generate walls
         WallGenerator.CreateWalls(floorPositions, tilemapVisualizer);
 
+        // Place objects in order of priority
         PlacePlayer(floorPositions);
-
-        // Place torches
         PlaceTorches(floorPositions);
-
-        // Set up spawn points for the single EnemySpawner
         SetupEnemySpawner(floorPositions);
-
-        // Place chests
         PlaceChests(floorPositions);
+        PlaceNpcs(floorPositions);
+    }
+
+    private Vector2Int GetAvailablePosition(List<Vector2Int> floorList)
+    {
+        while (floorList.Count > 0)
+        {
+            int index = Random.Range(0, floorList.Count);
+            Vector2Int position = floorList[index];
+
+            // Check if position is not occupied
+            if (!occupiedPositions.Contains(position))
+            {
+                floorList.RemoveAt(index);
+                occupiedPositions.Add(position); // Mark as occupied
+                return position;
+            }
+
+            // Remove the occupied position from available positions
+            floorList.RemoveAt(index);
+        }
+
+        Debug.LogWarning("No available positions left for placement!");
+        return Vector2Int.zero;
     }
 
     protected void PlacePlayer(HashSet<Vector2Int> floorPositions)
     {
         var floorList = floorPositions.ToList();
-        Vector3 pos = GetRandomSpawnPosition(floorList);
-        player.transform.position = pos;
+        Vector2Int pos = GetAvailablePosition(floorList);
+        player.transform.position = new Vector3(pos.x + 0.5f, pos.y + 0.5f, 0);
     }
 
     protected void PlaceTorches(HashSet<Vector2Int> floorPositions)
     {
+        var floorList = floorPositions.ToList();
         int counter = 0;
-
-        // Find all existing torches to reuse
         var existingTorches = spawnedObjects.Where(obj => obj != null && obj.name.StartsWith("Torch")).ToList();
         int reuseCount = 0;
 
-        foreach (var position in floorPositions)
+        foreach (var position in floorList.ToList()) // Create a copy to iterate
         {
-            // Ensure torches are placed only on floor tiles
             if (counter % torchPlacementFrequency == 0)
             {
-                Vector3 worldPosition = new Vector3(position.x + 0.5f, position.y + 0.5f, 0); // Adjusted to center on tile
+                if (occupiedPositions.Contains(position))
+                    continue;
+
+                Vector3 worldPosition = new Vector3(position.x + 0.5f, position.y + 0.5f, 0);
 
                 if (reuseCount < existingTorches.Count)
                 {
-                    // Reuse an existing torch
                     existingTorches[reuseCount].transform.position = worldPosition;
                     existingTorches[reuseCount].SetActive(true);
                     reuseCount++;
                 }
                 else
                 {
-                    // Instantiate a new torch if needed
                     var torch = Instantiate(torchPrefab, worldPosition, Quaternion.identity);
-                    torch.name = "Torch"; // Ensure no "(Clone)" suffix
+                    torch.name = "Torch";
                     spawnedObjects.Add(torch);
                 }
+
+                occupiedPositions.Add(position);
             }
             counter++;
         }
 
-        // Disable unused torches if any
         for (int i = reuseCount; i < existingTorches.Count; i++)
         {
             existingTorches[i].SetActive(false);
@@ -93,31 +113,41 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
 
     protected void PlaceChests(HashSet<Vector2Int> floorPositions)
     {
-        // Convert floor positions to a list for easier indexing
         var floorList = floorPositions.ToList();
-
-        // Keep track of how many chests are placed
         int chestsPlaced = 0;
 
         while (chestsPlaced < numberOfChests && floorList.Count > 0)
         {
-            // Get a random position from the floor list
-            Vector3 chestPosition = GetRandomSpawnPosition(floorList);
+            Vector2Int position = GetAvailablePosition(floorList);
+            if (position == Vector2Int.zero) break;
 
-            // Instantiate a chest prefab at this position
+            Vector3 chestPosition = new Vector3(position.x + 0.5f, position.y + 0.5f, 0);
             var chest = Instantiate(chestPrefab, chestPosition, Quaternion.identity);
-            chest.name = "Chest"; // Name the chest without "(Clone)" suffix
-
-            // Add the chest to the spawned objects list
+            chest.name = "Chest";
             spawnedObjects.Add(chest);
-
             chestsPlaced++;
+        }
+    }
+
+    protected void PlaceNpcs(HashSet<Vector2Int> floorPositions)
+    {
+        var floorList = floorPositions.ToList();
+        int npcsPlaced = 0;
+
+        while (npcsPlaced < numberOfNpcs && floorList.Count > 0)
+        {
+            Vector2Int position = GetAvailablePosition(floorList);
+            if (position == Vector2Int.zero) break;
+
+            Vector3 npcPosition = new Vector3(position.x + 0.5f, position.y + 0.5f, 0);
+            var npc = Instantiate(npcPrefab, npcPosition, Quaternion.identity);
+            spawnedObjects.Add(npc);
+            npcsPlaced++;
         }
     }
 
     protected void SetupEnemySpawner(HashSet<Vector2Int> floorPositions)
     {
-        // Exit early if no enemy spawner is defined
         if (enemySpawner == null) return;
 
         var spawnerScript = enemySpawner.GetComponent<EenemySpawner>();
@@ -129,14 +159,17 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
     private void ConfigureSpawnPoints(GameObject spawnerInstance, EenemySpawner spawnerScript, HashSet<Vector2Int> floorPositions)
     {
         var spawnPoints = spawnerScript.spawnPoints;
-        spawnPoints.Clear(); // Reset existing spawn points
+        spawnPoints.Clear();
 
         var floorList = floorPositions.ToList();
         int childCount = spawnerInstance.transform.childCount;
 
         for (int i = 0; i < spawnerPlacementCount && floorList.Count > 0; i++)
         {
-            Vector3 worldPosition = GetRandomSpawnPosition(floorList);
+            Vector2Int position = GetAvailablePosition(floorList);
+            if (position == Vector2Int.zero) break;
+
+            Vector3 worldPosition = new Vector3(position.x + 0.5f, position.y + 0.5f, 0);
 
             GameObject spawnPoint = i < childCount
                 ? ReuseSpawnPoint(spawnerInstance.transform.GetChild(i).gameObject, worldPosition)
@@ -146,14 +179,6 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
         }
 
         DisableExtraSpawnPoints(spawnerInstance, spawnerPlacementCount);
-    }
-
-    private Vector3 GetRandomSpawnPosition(List<Vector2Int> floorList)
-    {
-        int index = Random.Range(0, floorList.Count);
-        Vector2Int spawnPosition = floorList[index];
-        floorList.RemoveAt(index);
-        return new Vector3(spawnPosition.x + 0.5f, spawnPosition.y + 0.5f, 0); // Centered position
     }
 
     private GameObject ReuseSpawnPoint(GameObject spawnPoint, Vector3 worldPosition)
@@ -174,7 +199,6 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
     private void DisableExtraSpawnPoints(GameObject spawnerInstance, int activeCount)
     {
         int childCount = spawnerInstance.transform.childCount;
-
         for (int i = activeCount; i < childCount; i++)
         {
             spawnerInstance.transform.GetChild(i).gameObject.SetActive(false);
@@ -183,15 +207,14 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
 
     protected void ClearPreviousGeneration()
     {
-        // Destroy all previously spawned objects and clear the list
         foreach (var obj in spawnedObjects)
         {
             if (obj != null)
             {
 #if UNITY_EDITOR
-                DestroyImmediate(obj); // Editor mode
+                DestroyImmediate(obj);
 #else
-                Destroy(obj); // Play mode
+                Destroy(obj);
 #endif
             }
         }

@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: Pentagon
   productName: MindMaze
-  defaultCursor: {fileID: 0}
+  defaultCursor: {fileID: 2800000, guid: 84f5cc126140bb84f9e81dd7631d9268, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1
@@ -273,7 +273,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: bc2f1b2961cf0af41921db4f13d140ff, type: 3}
+      m_Icon: {fileID: 2800000, guid: ce8018f08cce5404cb065131621c8508, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0

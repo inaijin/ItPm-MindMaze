@@ -68,6 +68,7 @@
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
     <Compile Include="Assets\_Scripts\Feedback\ShakeFeedback.cs" />
     <Compile Include="Assets\_Scripts\Feedback\FlashLightFeedback.cs" />
+    <Compile Include="Assets\_Scripts\Key.cs" />
     <Compile Include="Assets\_Scripts\Enemies\Enemy.cs" />
     <Compile Include="Assets\_Scripts\DataSO\EnemyDataSO.cs" />
     <Compile Include="Assets\_Scripts\DataSO\BulletDataSO.cs" />
@@ -132,7 +133,8 @@
     <Compile Include="Assets\_Scripts\WallGenerator.cs" />
     <Compile Include="Assets\_Scripts\Player\PlayerWeapon.cs" />
     <Compile Include="Assets\_Scripts\AI\Actions\IdleAction.cs" />
-    <Compile Include="Assets\_Scripts\Key.cs" />
+    <Compile Include="Assets\_Scripts\NPC\Npc.cs" />
+    <Compile Include="Assets\_Scripts\UI\DialogManager.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
