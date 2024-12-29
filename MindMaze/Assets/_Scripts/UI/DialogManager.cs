@@ -16,10 +16,20 @@ public class DialogManager : MonoBehaviour
     [SerializeField] private GameObject weapon; // Weapon GameObject to deactivate/reactivate
     [SerializeField] private GameManager gameManager; // Reference to GameManager for cursor management
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource audioSource; // AudioSource for playing typing sound
+    [SerializeField] private AudioClip typingSound; // AudioClip for typing sound
+    [SerializeField] private float typingSoundInterval = 0.1f; // Time between typing sound plays
+
     private bool isTyping = false;
     private float typingSpeed = 0.05f; // Default typing speed
+    private float normalTypingSpeed = 0.05f; // Store the default typing speed
+    private float fastTypingSpeed = 0.025f; // 2x speed when holding Spacebar
+
     private string[] currentDialogLines; // Current dialog lines to display
     private int currentDialogIndex = 0;
+
+    private bool isDialogActive = false;
 
     private void Awake()
     {
@@ -45,11 +55,21 @@ public class DialogManager : MonoBehaviour
         {
             Debug.LogError("Continue button is not assigned in DialogManager!");
         }
+
+        // Validate AudioSource
+        if (audioSource == null)
+        {
+            Debug.LogError("AudioSource is not assigned in DialogManager!");
+        }
     }
 
     public void StartDialog(string[] dialogLines, float typingSpeed = 0.05f)
     {
+        if (isDialogActive) return; // Prevent starting a dialog if one is already active
+
+        isDialogActive = true;
         this.typingSpeed = typingSpeed;
+        normalTypingSpeed = typingSpeed; // Save the normal speed
         currentDialogLines = dialogLines;
         currentDialogIndex = 0;
 
@@ -63,6 +83,30 @@ public class DialogManager : MonoBehaviour
             gameManager.SetCursorDefault();
 
         DisplayNextLine();
+    }
+
+    private void Update()
+    {
+        // Check if Space is held to increase typing speed
+        if (isDialogActive && isTyping)
+        {
+            if (Input.GetKey(KeyCode.Space))
+            {
+                typingSpeed = fastTypingSpeed; // Increase speed when holding Spacebar
+                audioSource.pitch = 1.5f; // Increase pitch to simulate faster sound
+            }
+            else
+            {
+                typingSpeed = normalTypingSpeed; // Reset speed when releasing Spacebar
+                audioSource.pitch = 1.0f; // Reset pitch
+            }
+        }
+
+        // Check if Space is pressed to continue dialog
+        if (isDialogActive && !isTyping && Input.GetKeyDown(KeyCode.Space))
+        {
+            ContinueDialog();
+        }
     }
 
     private void DisplayNextLine()
@@ -83,14 +127,34 @@ public class DialogManager : MonoBehaviour
         dialogText.text = ""; // Clear previous text
         continueButton.gameObject.SetActive(false);
 
+        float soundTimer = 0f; // Timer to control sound playback
+
         foreach (char letter in line)
         {
             dialogText.text += letter; // Append letter by letter
+
+            // Play typing sound at intervals
+            soundTimer += typingSpeed;
+            if (soundTimer >= typingSoundInterval)
+            {
+                PlayTypingSound();
+                soundTimer = 0f;
+            }
+
             yield return new WaitForSeconds(typingSpeed);
         }
 
         isTyping = false;
         continueButton.gameObject.SetActive(true); // Enable the continue button
+        audioSource.pitch = 1.0f; // Reset pitch when typing finishes
+    }
+
+    private void PlayTypingSound()
+    {
+        if (audioSource != null && typingSound != null && !audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(typingSound);
+        }
     }
 
     private void ContinueDialog()
@@ -104,6 +168,9 @@ public class DialogManager : MonoBehaviour
 
     public void EndDialog()
     {
+        isDialogActive = false;
+        typingSpeed = normalTypingSpeed; // Reset typing speed
+        audioSource.pitch = 1.0f; // Reset pitch
         dialogCanvas.gameObject.SetActive(false); // Hide the entire dialog canvas
 
         // Reactivate weapon and set gameplay cursor
@@ -112,5 +179,10 @@ public class DialogManager : MonoBehaviour
 
         if (gameManager != null)
             gameManager.SetCursorIcon();
+    }
+
+    public bool IsDialogActive()
+    {
+        return isDialogActive;
     }
 }
