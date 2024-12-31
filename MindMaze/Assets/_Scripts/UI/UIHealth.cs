@@ -10,7 +10,7 @@ public class UIHealth : MonoBehaviour
     [SerializeField]
     private Sprite heartFull = null, heartEmpty = null;
 
-    private int heartCount = 0;
+    public int heartCount = 0;
 
     private List<Image> hearts = new List<Image>();
 

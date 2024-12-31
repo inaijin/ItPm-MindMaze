@@ -135,6 +135,7 @@
     <Compile Include="Assets/_Scripts/WallGenerator.cs" />
     <Compile Include="Assets/_Scripts/Player/PlayerWeapon.cs" />
     <Compile Include="Assets/_Scripts/AI/Actions/IdleAction.cs" />
+    <Compile Include="Assets/_Scripts/NPC/ShopNPC.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
