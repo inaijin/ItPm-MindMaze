@@ -2,9 +2,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class DialogManager : MonoBehaviour
 {
+    public event Action OnDialogEnd;
     public static DialogManager Instance; // Singleton instance for global access
 
     [Header("Dialog UI Elements")]
@@ -179,10 +181,13 @@ public class DialogManager : MonoBehaviour
 
         if (gameManager != null)
             gameManager.SetCursorIcon();
-    }
 
+        OnDialogEnd?.Invoke(); // Trigger the dialog end event
+    }
     public bool IsDialogActive()
     {
         return isDialogActive;
     }
+
+
 }

@@ -12,12 +12,16 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
     [SerializeField] private GameObject enemySpawner;
     [SerializeField] private GameObject chestPrefab;
     [SerializeField] private GameObject npcPrefab;
+    [SerializeField] private GameObject npcShopPrefab;
     [SerializeField] private GameObject player;
 
     [SerializeField] private int torchPlacementFrequency = 5;
     [SerializeField] private int spawnerPlacementCount = 4;
     [SerializeField] private int numberOfChests = 3;
     [SerializeField] private int numberOfNpcs = 2;
+
+    [SerializeField, Range(0, 100)]
+    private int shopNpcProbability = 30;
 
     private List<GameObject> spawnedObjects = new List<GameObject>();
     private HashSet<Vector2Int> occupiedPositions = new HashSet<Vector2Int>(); // Track occupied tiles
@@ -129,6 +133,21 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
         }
     }
 
+    private GameObject GetNpcPrefabByProbability()
+    {
+        // Generate a random number between 0 and 100
+        int randomValue = Random.Range(0, 100);
+
+        // Return the Shop NPC prefab if the random value is within the probability range
+        if (randomValue < shopNpcProbability)
+        {
+            return npcShopPrefab;
+        }
+
+        // Otherwise, return the Normal NPC prefab
+        return npcPrefab;
+    }
+
     protected void PlaceNpcs(HashSet<Vector2Int> floorPositions)
     {
         var floorList = floorPositions.ToList();
@@ -139,8 +158,11 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
             Vector2Int position = GetAvailablePosition(floorList);
             if (position == Vector2Int.zero) break;
 
+            // Decide which prefab to use based on probability
+            GameObject prefab = GetNpcPrefabByProbability();
+
             Vector3 npcPosition = new Vector3(position.x + 0.5f, position.y + 0.5f, 0);
-            var npc = Instantiate(npcPrefab, npcPosition, Quaternion.identity);
+            var npc = Instantiate(prefab, npcPosition, Quaternion.identity);
             spawnedObjects.Add(npc);
             npcsPlaced++;
         }

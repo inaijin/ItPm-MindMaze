@@ -6,8 +6,10 @@ using UnityEngine.Events;
 public class Player : MonoBehaviour, IAgent, IHittable
 {
     [SerializeField]
-    private int maxHealth = 2;
+    public int maxHealth = 3;
     private int numberOfKey = 0;
+
+    public int coin = 0;
 
     private int health;
     public int Health { 
@@ -15,6 +17,7 @@ public class Player : MonoBehaviour, IAgent, IHittable
         set 
         {
             health = Mathf.Clamp(value,0,maxHealth);
+            Debug.Log("Health is " + health);
             uiHealth.UpdateUI(health);
         } 
     }
@@ -44,6 +47,12 @@ public class Player : MonoBehaviour, IAgent, IHittable
         uiKey.UdpateKeyText(numberOfKey);
         Health = maxHealth;
         uiHealth.Initialize(Health);
+    }
+
+    public void AddMaxHealth()
+    {
+        maxHealth++;
+        uiHealth.AddMaxUI();
     }
     public void GetHit(int damage, GameObject damageDealer)
     {

@@ -84,7 +84,7 @@ GameObject:
   - component: {fileID: 5729174435816918258}
   - component: {fileID: 282853035}
   - component: {fileID: 282853036}
-  - component: {fileID: 2235461934181674079}
+  - component: {fileID: 2626860918556376798}
   m_Layer: 15
   m_Name: ShopNPC
   m_TagString: Untagged
@@ -190,7 +190,7 @@ CapsuleCollider2D:
   m_Offset: {x: -0.04360962, y: 0.019107819}
   m_Size: {x: 1.0393333, y: 1.3488541}
   m_Direction: 0
---- !u!114 &2235461934181674079
+--- !u!114 &2626860918556376798
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -202,3 +202,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32d1be6e52f5f496ca734ec042bff746, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialogLines:
+  - 'test1 '
+  - test 2
+  - test 33
+  typingSpeed: 0.05

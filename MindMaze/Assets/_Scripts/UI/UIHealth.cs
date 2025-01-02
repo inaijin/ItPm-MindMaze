@@ -43,4 +43,12 @@ public class UIHealth : MonoBehaviour
             currentIndex++;
         }
     }
+
+    public void AddMaxUI()
+    {
+        heartCount++;
+        Image heart = Instantiate(heartPrefab, healthPanel.transform).GetComponent<Image>();
+        heart.sprite = heartEmpty;
+        hearts.Add(heart);
+    }
 }
