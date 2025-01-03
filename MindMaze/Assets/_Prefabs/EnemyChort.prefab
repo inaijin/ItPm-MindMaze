@@ -48,7 +48,9 @@ MonoBehaviour:
     itemPrefab: {fileID: 8180210612639824011, guid: fa57337f6ca5d3d4bbaccb5486a1df11, type: 3}
   - rate: 0.8
     itemPrefab: {fileID: 8918718601272524933, guid: b6e351182380d6c41a4875350d8645a5, type: 3}
-  dropChance: 0.5
+  - rate: 1
+    itemPrefab: {fileID: 8918718601272524933, guid: 81b385c02b2f2754d9dfad17dd9012e9, type: 3}
+  dropChance: 1
 --- !u!1 &1193475821497348021
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,7 +485,7 @@ MonoBehaviour:
   - {x: -0.16085815, y: -0.447892, z: 0}
   m_ShapePathHash: -1841398313
   m_Mesh: {fileID: 0}
-  m_InstanceId: 26386
+  m_InstanceId: 20154
 --- !u!1 &8562805970411843244
 GameObject:
   m_ObjectHideFlags: 0

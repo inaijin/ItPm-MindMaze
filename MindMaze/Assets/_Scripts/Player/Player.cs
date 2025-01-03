@@ -9,7 +9,17 @@ public class Player : MonoBehaviour, IAgent, IHittable
     public int maxHealth = 3;
     private int numberOfKey = 0;
 
-    public int coin = 0;
+    private int _coin = 0;
+    public int coin 
+    {
+        get => _coin;
+        set 
+        {
+            _coin = value;
+            uiCoin.UpdateCoinText(_coin);
+
+        } 
+    }
 
     private int health;
     public int Health { 
@@ -17,7 +27,6 @@ public class Player : MonoBehaviour, IAgent, IHittable
         set 
         {
             health = Mathf.Clamp(value,0,maxHealth);
-            Debug.Log("Health is " + health);
             uiHealth.UpdateUI(health);
         } 
     }
@@ -28,6 +37,8 @@ public class Player : MonoBehaviour, IAgent, IHittable
 
     [field: SerializeField]
     public UIHealth uiHealth { get; set; }
+
+    public UICoin uiCoin = null;
 
     [SerializeField]
     private UIKey uiKey = null;
@@ -47,6 +58,7 @@ public class Player : MonoBehaviour, IAgent, IHittable
         uiKey.UdpateKeyText(numberOfKey);
         Health = maxHealth;
         uiHealth.Initialize(Health);
+        coin = _coin;
     }
 
     public void AddMaxHealth()
@@ -100,6 +112,10 @@ public class Player : MonoBehaviour, IAgent, IHittable
                             return;
                         }
                         playeWeapon.AddAmmo(resource.ResourceData.GetAmount());
+                        resource.PickUpResource();
+                        break;
+                    case ResourceTypeEnum.Coin:
+                        coin += resource.ResourceData.GetAmount();
                         resource.PickUpResource();
                         break;
                     default:

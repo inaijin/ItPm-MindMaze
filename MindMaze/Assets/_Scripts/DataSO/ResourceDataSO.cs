@@ -20,5 +20,6 @@ public enum ResourceTypeEnum
 {
     None,
     Health,
-    Ammo
+    Ammo,
+    Coin
 }

@@ -124,9 +124,10 @@
     <Compile Include="Assets\_Scripts\ProceduralGenerationAlgorithms.cs" />
     <Compile Include="Assets\_Scripts\PauseMenu.cs" />
     <Compile Include="Assets\_Scripts\AgentSounds.cs" />
-    <Compile Include="Assets\_Scripts\NPC\ShopNPC.cs" />
+    <Compile Include="Assets\_Scripts\NPC\ShopNpc.cs" />
     <Compile Include="Assets\_Scripts\Feedback\ShakeCinemachineFeedback.cs" />
     <Compile Include="Assets\_Scripts\Enemies\EnemyAttack.cs" />
+    <Compile Include="Assets\_Scripts\Shop\ShopManager.cs" />
     <Compile Include="Assets\_Scripts\AI\AIAction.cs" />
     <Compile Include="Assets\_Scripts\AgentInput.cs" />
     <Compile Include="Assets\_Scripts\Enemies\EenemySpawner.cs" />
@@ -136,7 +137,7 @@
     <Compile Include="Assets\_Scripts\WallGenerator.cs" />
     <Compile Include="Assets\_Scripts\Player\PlayerWeapon.cs" />
     <Compile Include="Assets\_Scripts\AI\Actions\IdleAction.cs" />
-    <Compile Include="Assets\_Scripts\Shop\ShopManager.cs" />
+    <Compile Include="Assets\_Scripts\UI\UICoin.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

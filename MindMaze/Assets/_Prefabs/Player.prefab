@@ -281,7 +281,7 @@ MonoBehaviour:
   - {x: -0.35417277, y: -0.45709747, z: 0}
   m_ShapePathHash: 1265405253
   m_Mesh: {fileID: 0}
-  m_InstanceId: 24606
+  m_InstanceId: -1268
 --- !u!1 &3118500029426271951
 GameObject:
   m_ObjectHideFlags: 0
@@ -685,7 +685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff214c022b0cbc498aa771b17ec7549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5
+  maxHealth: 3
   <uiHealth>k__BackingField: {fileID: 0}
   uiKey: {fileID: 0}
   <OnDie>k__BackingField:
