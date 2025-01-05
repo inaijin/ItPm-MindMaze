@@ -81,6 +81,7 @@
     <Compile Include="Assets\_Scripts\TimeController.cs" />
     <Compile Include="Assets\_Scripts\AI\Decisions\DistanceDecision.cs" />
     <Compile Include="Assets\_Scripts\AI\Decisions\LookDecision.cs" />
+    <Compile Include="Assets\_Scripts\UI\UICoin.cs" />
     <Compile Include="Assets\_Scripts\Resources\Resource.cs" />
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModulePhysics.cs" />
     <Compile Include="Assets\_Scripts\Enemies\EnemyMeleeAttack.cs" />
@@ -137,7 +138,8 @@
     <Compile Include="Assets\_Scripts\WallGenerator.cs" />
     <Compile Include="Assets\_Scripts\Player\PlayerWeapon.cs" />
     <Compile Include="Assets\_Scripts\AI\Actions\IdleAction.cs" />
-    <Compile Include="Assets\_Scripts\UI\UICoin.cs" />
+    <Compile Include="Assets\_Scripts\UI\NotificationManager.cs" />
+    <Compile Include="Assets\_Scripts\DataSO\ChestNotificationData.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -5,6 +5,7 @@ public class Chest : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private GameObject keyPrefab;
+    [SerializeField] private ChestNotificationData notificationData;
 
     [Header("Animation Settings")]
     [SerializeField] private float keyFloatDuration = 1f;
@@ -17,8 +18,20 @@ public class Chest : MonoBehaviour
     private bool isOpen = false;
     private AudioSource chestAudioSource;
 
+    private static int idCounter = 0;
+    private int chestId;
+
+    private void Awake()
+    {
+        idCounter = 0; // Reset counter when the scene is loaded
+    }
+
     private void Start()
     {
+        idCounter++;
+        chestId = idCounter;
+        Debug.Log("Chest ID: " + chestId);
+
         player = FindObjectOfType<Player>();
         animator = GetComponent<Animator>();
         chestAudioSource = GetComponent<AudioSource>();
@@ -43,23 +56,35 @@ public class Chest : MonoBehaviour
             animator.SetTrigger("Open");
             isOpen = true;
             SpawnAndAnimateKey();
+
+            // Get the notification message
+            string notificationMessage = GetNotificationMessage();
+            NotificationManager.Instance.ShowNotification(notificationMessage);
         }
+    }
+
+    private string GetNotificationMessage()
+    {
+        if (notificationData != null && notificationData.messages.Length > 0)
+        {
+            // Get message by ID (ensure it's within bounds)
+            int index = (chestId - 1) % notificationData.messages.Length;
+            return notificationData.messages[index];
+        }
+
+        return "You opened a chest, but there's no message assigned!";
     }
 
     private void SpawnAndAnimateKey()
     {
-        // Spawn the key at chest position
         GameObject key = Instantiate(keyPrefab, transform.position, Quaternion.identity);
 
-        // Create a sequence of animations
         Sequence keySequence = DOTween.Sequence();
 
-        // First float up and rotate
         keySequence.Append(key.transform.DOMoveY(transform.position.y + keyFloatHeight, keyFloatDuration)
             .SetEase(Ease.OutQuad));
         keySequence.Join(key.transform.DORotate(keyRotation, keyFloatDuration, RotateMode.FastBeyond360));
 
-        // When complete, destroy the key object and update the player's key count
         keySequence.OnComplete(() => {
             player.FindKey();
             Destroy(key);

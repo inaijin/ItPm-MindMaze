@@ -143,6 +143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyPrefab: {fileID: 419277471288586274, guid: 4336790e768a6754d997a8562534f4e6, type: 3}
+  notificationData: {fileID: 11400000, guid: 7086d26da25c8414c826134896c04b6f, type: 2}
   keyFloatDuration: 0.5
   keyFloatHeight: 1
   keyRotation: {x: 0, y: 360, z: 0}
