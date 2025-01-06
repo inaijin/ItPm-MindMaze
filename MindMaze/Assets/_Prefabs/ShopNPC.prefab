@@ -202,8 +202,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32d1be6e52f5f496ca734ec042bff746, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogLines:
-  - 'test1 '
-  - test 2
-  - test 33
+  npcData: {fileID: 11400000, guid: ba3dca064e807754791a51b15e9fbee9, type: 2}
   typingSpeed: 0.05

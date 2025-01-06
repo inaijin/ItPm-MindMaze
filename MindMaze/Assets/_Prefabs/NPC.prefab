@@ -170,11 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ebfef29bdcc2ef448f521c25d165d0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogLines:
-  - "Ah, a newcomer, are you? I didn\u2019t expect anyone to wander into these dark
-    halls."
-  - "It\u2019s been a long time since I\u2019ve seen a fresh face around here. You
-    must be brave... or foolish."
+  npcData: {fileID: 11400000, guid: ba3dca064e807754791a51b15e9fbee9, type: 2}
   typingSpeed: 0.05
 --- !u!58 &282853035
 CircleCollider2D:
