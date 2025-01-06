@@ -14,7 +14,7 @@ public class Weapon : MonoBehaviour
     protected int ammo = 10;
 
     [SerializeField]
-    protected WeaponDataSO weaponData;
+    public WeaponDataSO weaponData;
 
     public int Ammo
     {
@@ -44,6 +44,11 @@ public class Weapon : MonoBehaviour
     private void Start()
     {
         Ammo = weaponData.AmmoCapacity;
+    }
+
+    private void Awake()
+    {
+        weaponData.AmmoCapacity = 100;
     }
 
     public void TryShooting()

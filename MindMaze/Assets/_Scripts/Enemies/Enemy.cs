@@ -24,14 +24,19 @@ public class Enemy : MonoBehaviour, IHittable, IAgent, IKnockBack
     [field: SerializeField]
     public UnityEvent OnDie { get; set; }
 
+    // New Field for Damage Multiplier
+    [field: SerializeField]
+    public int TakeDamageMultiplier { get; set; } = 1; // Default to 1
+
     private void Awake()
     {
-        if(enemyAttack == null)
+        if (enemyAttack == null)
         {
             enemyAttack = GetComponent<EnemyAttack>();
         }
         agentMovemenet = GetComponent<AgentMovement>();
     }
+
     private void Start()
     {
         Health = EnemyData.MaxHealth;
@@ -39,18 +44,22 @@ public class Enemy : MonoBehaviour, IHittable, IAgent, IKnockBack
 
     public void GetHit(int damage, GameObject damageDealer)
     {
-        if(dead == false)
+        if (!dead)
         {
-            Health--;
+            // Apply damage multiplier
+            int totalDamage = damage * TakeDamageMultiplier;
+            Health -= totalDamage;
+
+            Debug.Log($"Enemy took {totalDamage} damage (Multiplier: {TakeDamageMultiplier})");
+
             OnGetHit?.Invoke();
+
             if (Health <= 0)
             {
                 dead = true;
                 OnDie?.Invoke();
-
             }
         }
-        
     }
 
     public void Die()
@@ -60,7 +69,7 @@ public class Enemy : MonoBehaviour, IHittable, IAgent, IKnockBack
 
     public void PerformAttack()
     {
-        if (dead == false)
+        if (!dead)
         {
             enemyAttack.Attack(EnemyData.Damage);
         }

@@ -6,10 +6,13 @@
           <Node name="MindMaze" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="_Scripts" expanded="True">
-                <Node name="Feedback" expanded="True" />
-                <Node name="Shop" expanded="True">
-                  <Node name="ShopManager.cs" selected="True" />
+                <Node name="DataSO" expanded="True">
+                  <Node name="WeaponDataSO.cs" selected="True" />
                 </Node>
+                <Node name="Enemies" expanded="True" />
+                <Node name="Feedback" expanded="True" />
+                <Node name="Player" expanded="True" />
+                <Node name="Shop" expanded="True" />
                 <Node name="Weapons" expanded="True" />
               </Node>
             </Node>
@@ -20,7 +23,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4e2c9078-4d1e-4f24-a5f4-290c746c0cd0" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="b4573132-52cf-46a3-afac-62459af7893a" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
