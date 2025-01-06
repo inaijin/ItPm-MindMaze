@@ -85,6 +85,7 @@ GameObject:
   - component: {fileID: 5089208679792497005}
   - component: {fileID: 282853035}
   - component: {fileID: 282853036}
+  - component: {fileID: 745851504755133106}
   m_Layer: 15
   m_Name: NPC
   m_TagString: Untagged
@@ -170,7 +171,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ebfef29bdcc2ef448f521c25d165d0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcData: {fileID: 11400000, guid: ba3dca064e807754791a51b15e9fbee9, type: 2}
+  npcsData:
+  - {fileID: 11400000, guid: ba3dca064e807754791a51b15e9fbee9, type: 2}
+  - {fileID: 11400000, guid: 447533a4a54917946b153e66ba5d4e43, type: 2}
   typingSpeed: 0.05
 --- !u!58 &282853035
 CircleCollider2D:
@@ -204,3 +207,24 @@ CapsuleCollider2D:
   m_Offset: {x: 0.050666034, y: -0.03660202}
   m_Size: {x: 0.6622274, y: 1.014595}
   m_Direction: 0
+--- !u!50 &745851504755133106
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4229009547736815406}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 10
+  m_LinearDrag: 10
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4

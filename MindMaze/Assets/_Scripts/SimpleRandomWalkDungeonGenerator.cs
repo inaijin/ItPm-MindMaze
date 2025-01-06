@@ -19,9 +19,16 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
     [SerializeField] private int spawnerPlacementCount = 4;
     [SerializeField] private int numberOfChests = 3;
     [SerializeField] private int numberOfNormalNpcs = 1; 
-    [SerializeField] private int numberOfShopNpcs = 1; 
+    [SerializeField] private int numberOfShopNpcs = 1;
 
 
+
+
+    [SerializeField] private float enemyDistanceChangeType = 10f;
+
+
+
+    private Vector3 playerSpawnPoint;
 
     private List<GameObject> spawnedObjects = new List<GameObject>();
     private HashSet<Vector2Int> occupiedPositions = new HashSet<Vector2Int>(); // Track occupied tiles
@@ -73,6 +80,7 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
         var floorList = floorPositions.ToList();
         Vector2Int pos = GetAvailablePosition(floorList);
         player.transform.position = new Vector3(pos.x + 0.5f, pos.y + 0.5f, 0);
+        playerSpawnPoint = player.transform.position;
     }
 
     protected void PlaceTorches(HashSet<Vector2Int> floorPositions)
@@ -195,7 +203,19 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
                 ? ReuseSpawnPoint(spawnerInstance.transform.GetChild(i).gameObject, worldPosition)
                 : CreateNewSpawnPoint(spawnerInstance, i, worldPosition);
 
-            spawnPoints.Add(spawnPoint);
+            EnemySpawnPoint sp;
+            sp.spawnPoint = spawnPoint;
+            if(Vector3.Distance(spawnPoint.transform.position,playerSpawnPoint) < enemyDistanceChangeType)
+            {
+                Debug.Log("enemy 0");
+                sp.type = 0;
+            }
+            else
+            {
+                Debug.Log("enemy 1");
+                sp.type = 1;
+            }
+            spawnPoints.Add(sp);
         }
 
         DisableExtraSpawnPoints(spawnerInstance, spawnerPlacementCount);

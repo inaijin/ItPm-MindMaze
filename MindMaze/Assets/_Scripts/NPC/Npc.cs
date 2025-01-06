@@ -1,27 +1,39 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Npc : MonoBehaviour
 {
     [Header("NPC Data")]
-    public NpcDataSO npcData; // Reference to the ScriptableObject containing NPC data
+    public NpcDataSO[] npcsData; // Reference to the ScriptableObject containing NPC data
 
     [Header("Player Interaction")]
     private Transform player;
     private SpriteRenderer spriteRenderer;
     protected bool isPlayerNear = false;
 
+    private static int id = 0;
+    private int _id;
+
     [Header("Dialog Settings")]
     private string[] dialogLines; // NPC-specific dialog lines
     public float typingSpeed = 0.05f; // Default typing speed, can be overridden
 
+    private void Awake()
+    {
+        id = 0;
+    }
     protected virtual void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
 
+        id++;
+        _id = id;
+
         // Load data from the ScriptableObject
-        if (npcData != null)
+        if (npcsData != null)
         {
+            NpcDataSO npcData = npcsData[_id % npcsData.Length];
             spriteRenderer.sprite = npcData.sprite; // Set the NPC's sprite
             dialogLines = npcData.dialogLines; // Load dialog lines
         }

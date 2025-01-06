@@ -85,6 +85,7 @@ GameObject:
   - component: {fileID: 282853035}
   - component: {fileID: 282853036}
   - component: {fileID: 2626860918556376798}
+  - component: {fileID: 1142863040856986980}
   m_Layer: 15
   m_Name: ShopNPC
   m_TagString: Untagged
@@ -202,5 +203,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32d1be6e52f5f496ca734ec042bff746, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcData: {fileID: 11400000, guid: ba3dca064e807754791a51b15e9fbee9, type: 2}
+  npcsData:
+  - {fileID: 11400000, guid: 3ef96ae03d633fc4083358a00be3d817, type: 2}
   typingSpeed: 0.05
+--- !u!50 &1142863040856986980
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4229009547736815406}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 10
+  m_LinearDrag: 10
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
