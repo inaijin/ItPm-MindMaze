@@ -14,8 +14,8 @@ public class BulletShellGenerator : ObjectPool
 
     public void SpawnBulletShell()
     {
-        var shell = SpawnObject();
-        MoveShellInRandomDirection(shell);
+        //var shell = SpawnObject();
+        //MoveShellInRandomDirection(shell);
     }
 
     private void MoveShellInRandomDirection(GameObject shell)
