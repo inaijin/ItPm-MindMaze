@@ -51,6 +51,15 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
         PlaceChests(floorPositions);
 
         PlaceNpcs(floorPositions);
+
+        if (spawnDoorAtRandom)
+        {
+            PlaceDoorAtRandomFloor(floorPositions);
+        }
+        else
+        {
+            PlaceDoorNextToPlayer();
+        }
     }
 
     private void CreateRoomsAtDeadEnd(List<Vector2Int> deadEnds, HashSet<Vector2Int> roomFloors)

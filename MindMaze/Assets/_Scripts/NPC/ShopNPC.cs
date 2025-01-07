@@ -21,7 +21,7 @@ public class ShopNpc : Npc
     private void HandleDialogEnd()
     {
         // Check if the player just finished interacting with this ShopNpc
-        if (isPlayerNear) 
+        if (isPlayerNear && DialogManager.Instance.IsDialogActive() == false)
         {
             ShopManager.Instance?.OpenShop();
         }
@@ -33,8 +33,9 @@ public class ShopNpc : Npc
 
         if (collision.CompareTag("Player"))
         {
-            // Close the shop UI when the player exits the interaction range
+            isPlayerNear = false; // Ensure the flag is properly reset
             ShopManager.Instance?.CloseShop();
         }
     }
+
 }

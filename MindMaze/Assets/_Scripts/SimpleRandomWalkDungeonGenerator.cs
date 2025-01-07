@@ -21,12 +21,10 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
     [SerializeField] private int numberOfNormalNpcs = 1; 
     [SerializeField] private int numberOfShopNpcs = 1;
 
-
-
+    [SerializeField] private GameObject doorPrefab;
+    [SerializeField] protected bool spawnDoorAtRandom = true; // Toggle for random placement or near player
 
     [SerializeField] private float enemyDistanceChangeType = 10f;
-
-
 
     private Vector3 playerSpawnPoint;
 
@@ -51,6 +49,67 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
         PlaceChests(floorPositions);
         PlaceNpcs(floorPositions);
     }
+
+    protected void PlaceDoorAtRandomFloor(HashSet<Vector2Int> floorPositions)
+    {
+        if (doorPrefab == null)
+        {
+            Debug.LogWarning("Door Prefab is not assigned!");
+            return;
+        }
+
+        var floorList = floorPositions.ToList();
+        Vector2Int doorPosition = GetAvailablePosition(floorList);
+
+        if (doorPosition == Vector2Int.zero)
+        {
+            Debug.LogWarning("Failed to place the door. No valid floor position found.");
+            return;
+        }
+
+        Vector3 worldPosition = new Vector3(doorPosition.x + 0.5f, doorPosition.y + 0.5f, 0);
+        GameObject door = Instantiate(doorPrefab, worldPosition, Quaternion.identity);
+        door.name = "ProceduralDoor";
+
+        occupiedPositions.Add(doorPosition);
+        Debug.Log("Door placed randomly on the map.");
+    }
+
+    protected void PlaceDoorNextToPlayer()
+    {
+        if (doorPrefab == null)
+        {
+            Debug.LogWarning("Door Prefab is not assigned!");
+            return;
+        }
+
+        Vector3 playerPosition = playerSpawnPoint;
+        Vector2Int[] directions = {
+        Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right
+    };
+
+        foreach (var direction in directions)
+        {
+            Vector2Int possiblePosition = new Vector2Int(
+                Mathf.RoundToInt(playerPosition.x) + direction.x,
+                Mathf.RoundToInt(playerPosition.y) + direction.y
+            );
+
+            if (!occupiedPositions.Contains(possiblePosition))
+            {
+                Vector3 worldPosition = new Vector3(possiblePosition.x + 0.5f, possiblePosition.y + 0.5f, 0);
+                GameObject door = Instantiate(doorPrefab, worldPosition, Quaternion.identity);
+                door.name = "ProceduralDoor";
+
+                occupiedPositions.Add(possiblePosition);
+                Debug.Log("Door placed next to the player.");
+                return;
+            }
+        }
+
+        Debug.LogWarning("Failed to place the door next to the player. No valid adjacent tile found.");
+    }
+
 
     private Vector2Int GetAvailablePosition(List<Vector2Int> floorList)
     {

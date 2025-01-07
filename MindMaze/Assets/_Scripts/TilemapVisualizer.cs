@@ -107,4 +107,12 @@ public class TilemapVisualizer : MonoBehaviour
         if (tile != null)
             PaintSingleTile(wallTilemap, tile, position);
     }
+
+    public Vector3 CellToWorld(Vector2Int cellPosition)
+    {
+        // Convert Vector2Int to Vector3Int for Tilemap API compatibility
+        Vector3Int tilePosition = new Vector3Int(cellPosition.x, cellPosition.y, 0);
+        return floorTilemap.GetCellCenterWorld(tilePosition);
+    }
+
 }

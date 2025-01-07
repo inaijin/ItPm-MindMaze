@@ -7,7 +7,7 @@ public class Player : MonoBehaviour, IAgent, IHittable
 {
     [SerializeField]
     public int maxHealth = 3;
-    private int numberOfKey = 0;
+    public int numberOfKey = 0;
 
     private int _coin = 0;
     public int coin 

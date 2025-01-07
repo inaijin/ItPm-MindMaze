@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 3432901174953513207, guid: aae5977d1af33b54d99e49711753c497, type: 3}
   dialogLines:
-  - 1
-  - 2
-  - 3
-  - 4
+  - 1 beterek
+  - 2 bodo
+  - 3 secharkhe
+  - 4 nmd
