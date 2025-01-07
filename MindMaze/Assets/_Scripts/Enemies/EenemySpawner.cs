@@ -7,9 +7,7 @@ using Random = UnityEngine.Random;
 public class EenemySpawner : MonoBehaviour
 {
     [SerializeField]
-    private GameObject enemy1 = null;
-    [SerializeField]
-    private GameObject enemy2 = null;
+    private GameObject[] enemyList = new GameObject[4];
     [SerializeField]
     public List<EnemySpawnPoint> spawnPoints = new List<EnemySpawnPoint>();
     [SerializeField]
@@ -53,7 +51,7 @@ public class EenemySpawner : MonoBehaviour
             return;
         }
 
-        GameObject enemyPrefab = (spawnPoint.type == 0) ? enemy1 : enemy2;
+        GameObject enemyPrefab = enemyList[spawnPoint.type % enemyList.Length];
         if (enemyPrefab == null)
         {
             Debug.LogError("Enemy prefab is not assigned!");
@@ -62,7 +60,7 @@ public class EenemySpawner : MonoBehaviour
         Debug.Log("enemy name : "+enemyPrefab.name);
         Instantiate(
             enemyPrefab,
-            spawnPoint.spawnPoint.transform.position + (Vector3)Random.insideUnitCircle,
+            spawnPoint.spawnPoint.transform.position,
             Quaternion.identity
         );
     }

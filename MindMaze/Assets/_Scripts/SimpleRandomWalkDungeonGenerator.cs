@@ -30,6 +30,8 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
 
     private List<GameObject> spawnedObjects = new List<GameObject>();
     private HashSet<Vector2Int> occupiedPositions = new HashSet<Vector2Int>(); // Track occupied tiles
+    [SerializeField]
+    private int numberOfEnemyTypes = 4;
 
     protected override void RunProceduralGeneration()
     {
@@ -264,16 +266,9 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
 
             EnemySpawnPoint sp;
             sp.spawnPoint = spawnPoint;
-            if(Vector3.Distance(spawnPoint.transform.position,playerSpawnPoint) < enemyDistanceChangeType)
-            {
-                Debug.Log("enemy 0");
-                sp.type = 0;
-            }
-            else
-            {
-                Debug.Log("enemy 1");
-                sp.type = 1;
-            }
+            float distance = Vector3.Distance(spawnPoint.transform.position, playerSpawnPoint);
+            int type = Math.Min((int)(distance / enemyDistanceChangeType),numberOfEnemyTypes-1);
+            sp.type = type;
             spawnPoints.Add(sp);
         }
 
