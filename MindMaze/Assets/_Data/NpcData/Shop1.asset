@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: -6286954360436444883, guid: ec91a65a2928941088d99853d01984eb, type: 3}
   dialogLines:
-  - Man Shopam Taghato Mizanam
+  - "Ah, a wanderer! I\u2019ve got some items that might just help."
+  - "Don\u2019t be shy\u2014take a look at what I\u2019ve got."

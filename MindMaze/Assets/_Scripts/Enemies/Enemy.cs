@@ -47,7 +47,7 @@ public class Enemy : MonoBehaviour, IHittable, IAgent, IKnockBack
         if (!dead)
         {
             // Apply damage multiplier
-            int totalDamage = damage * TakeDamageMultiplier;
+            int totalDamage = damage;
             Health -= totalDamage;
 
             Debug.Log($"Enemy took {totalDamage} damage (Multiplier: {TakeDamageMultiplier})");

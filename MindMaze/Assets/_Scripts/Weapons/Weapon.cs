@@ -16,6 +16,8 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     public WeaponDataSO weaponData;
 
+    private int additionalDamage = 0;
+
     public int Ammo
     {
         get { return ammo; }
@@ -114,10 +116,18 @@ public class Weapon : MonoBehaviour
         SpawnBullet(muzzle.transform.position, CalculateAngle(muzzle));
     }
 
+    public void IncreaseDamage(int val = 1)
+    {
+        additionalDamage += val;
+    }
+
     private void SpawnBullet(Vector3 position, Quaternion rotation)
     {
         var bulletPrefab = Instantiate(weaponData.BulletData.bulletPrefab, position, rotation);
-        bulletPrefab.GetComponent<Bullet>().BulletData = weaponData.BulletData;
+        var bullet = bulletPrefab.GetComponent<RegularBullet>();
+        bullet.BulletData = weaponData.BulletData;
+        bullet.additionalDamage = additionalDamage;
+
     }
 
     private Quaternion CalculateAngle(GameObject muzzle)

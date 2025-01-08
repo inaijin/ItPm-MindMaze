@@ -133,14 +133,17 @@ public class DialogManager : MonoBehaviour
 
         foreach (char letter in line)
         {
-            dialogText.text += letter; // Append letter by letter
-
-            // Play typing sound at intervals
-            soundTimer += typingSpeed;
-            if (soundTimer >= typingSoundInterval)
+            if (isDialogActive)
             {
-                PlayTypingSound();
-                soundTimer = 0f;
+                dialogText.text += letter; // Append letter by letter
+
+                // Play typing sound at intervals
+                soundTimer += typingSpeed;
+                if (soundTimer >= typingSoundInterval)
+                {
+                    PlayTypingSound();
+                    soundTimer = 0f;
+                }
             }
 
             yield return new WaitForSeconds(typingSpeed);

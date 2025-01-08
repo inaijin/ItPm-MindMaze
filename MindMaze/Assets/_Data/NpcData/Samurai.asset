@@ -14,4 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 815424164945274260, guid: f026ed58d3f534cd0a29a4c674c69995, type: 3}
   dialogLines:
-  - YOKUSO WATASHINO SOULD SOCIETY
+  - This place? It is shaped by your hand, yet you walk it as a stranger.
+  - Ten locks, ten lessons. Only then can the way forward appear.
+  - "The final door does not open outward\u2014it turns inward."
+  - Every battle scars the soul. But scars remind us that we heal.
+  - Not every path leads forward. Some twists take you closer to the truth.

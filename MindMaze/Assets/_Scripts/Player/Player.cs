@@ -70,7 +70,7 @@ public class Player : MonoBehaviour, IAgent, IHittable
     {
         if(dead == false)
         {
-            Health--;
+            Health -= damage;
             OnGetHit?.Invoke();
             if (Health <= 0)
             {
@@ -81,6 +81,11 @@ public class Player : MonoBehaviour, IAgent, IHittable
         }
         
         
+    }
+
+    public PlayerWeapon GetWeapon()
+    {
+        return playeWeapon;
     }
     public void FindKey()
     {

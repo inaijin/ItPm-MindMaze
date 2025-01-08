@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2743394134836080786}
   - component: {fileID: 6881117330292474753}
   - component: {fileID: -1425873938140627003}
+  - component: {fileID: -3522722683390208943}
   m_Layer: 15
   m_Name: Door
   m_TagString: Untagged
@@ -46,13 +47,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce0df119b696c45389861011244a0bc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredKeys: 1
+  requiredKeys: 10
   insufficientKeyDialog:
-  - i 1
-  - i 2
+  - The path is long, and shadows still linger. Find the missing pieces of your truth.
+  - The echoes of your mind still hold secrets. Seek the keys that resonate with
+    your inner truth.
+  - The labyrinth's secrets are not yet fully yours. Find what's lost, and return
+    to this place.
+  - The journey is not yet over. The missing pieces await those who dare to look
+    within.
   sufficientKeyDialog:
-  - s 1
-  - s 2
+  - You hold the fragments of your soul. Are you ready to face the depths of your
+    being?
+  - With the keys in hand, the path to your core is unveiled. Will you walk it?
+  - The circle is now complete. The dance between light and shadow is ready to begin.
+  - With the keys as your guide, the final step is yours to take. Enter the heart
+    of your mind.
   typingSpeed: 0.05
 --- !u!212 &2743394134836080786
 SpriteRenderer:
@@ -134,6 +144,27 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0014646809, y: 0}
-  m_Size: {x: 0.94434077, y: 1.0339006}
+  m_Offset: {x: 0.008926868, y: 0}
+  m_Size: {x: 0.31254244, y: 1.0339006}
   m_Direction: 0
+--- !u!50 &-3522722683390208943
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5888373103079291352}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 10
+  m_LinearDrag: 10
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4

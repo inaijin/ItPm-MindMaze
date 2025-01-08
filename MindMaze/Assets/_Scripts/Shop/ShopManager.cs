@@ -123,14 +123,7 @@ public class ShopManager : MonoBehaviour
         {
             player.coin -= damagePrice;
 
-            // Update all enemies' damage multiplier
-            enemies = FindObjectsOfType<Enemy>();
-            foreach (var enemy in enemies)
-            {
-                enemy.TakeDamageMultiplier += 1;
-            }
-
-            Debug.Log("Damage multiplier increased by 1 for all enemies.");
+            playerWeapon.IncreaseDamage();
         }
         else
         {

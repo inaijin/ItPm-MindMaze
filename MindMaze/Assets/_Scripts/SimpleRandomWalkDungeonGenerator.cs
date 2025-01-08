@@ -328,4 +328,5 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
         }
         return floorPositions;
     }
+
 }
