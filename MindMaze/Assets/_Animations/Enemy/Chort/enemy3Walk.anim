@@ -20,13 +20,13 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 5391371871014708986, guid: 40b58b319ded876409ce4b3cd7ddb9d3, type: 3}
-    - time: 0.083333336
-      value: {fileID: -3802973358564585215, guid: 40b58b319ded876409ce4b3cd7ddb9d3, type: 3}
-    - time: 0.18333334
-      value: {fileID: 4794187213808007161, guid: 40b58b319ded876409ce4b3cd7ddb9d3, type: 3}
+      value: {fileID: -3905320441046690736, guid: 4ba070b637215465f810dcd49bae891d, type: 3}
     - time: 0.26666668
-      value: {fileID: 5502582329157115008, guid: 40b58b319ded876409ce4b3cd7ddb9d3, type: 3}
+      value: {fileID: 5260936352318865673, guid: 4ba070b637215465f810dcd49bae891d, type: 3}
+    - time: 0.48333332
+      value: {fileID: 6037038606213291844, guid: 4ba070b637215465f810dcd49bae891d, type: 3}
+    - time: 0.75
+      value: {fileID: 5692333675030920468, guid: 4ba070b637215465f810dcd49bae891d, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -46,16 +46,16 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 5391371871014708986, guid: 40b58b319ded876409ce4b3cd7ddb9d3, type: 3}
-    - {fileID: -3802973358564585215, guid: 40b58b319ded876409ce4b3cd7ddb9d3, type: 3}
-    - {fileID: 4794187213808007161, guid: 40b58b319ded876409ce4b3cd7ddb9d3, type: 3}
-    - {fileID: 5502582329157115008, guid: 40b58b319ded876409ce4b3cd7ddb9d3, type: 3}
+    - {fileID: -3905320441046690736, guid: 4ba070b637215465f810dcd49bae891d, type: 3}
+    - {fileID: 5260936352318865673, guid: 4ba070b637215465f810dcd49bae891d, type: 3}
+    - {fileID: 6037038606213291844, guid: 4ba070b637215465f810dcd49bae891d, type: 3}
+    - {fileID: 5692333675030920468, guid: 4ba070b637215465f810dcd49bae891d, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.28333336
+    m_StopTime: 0.9166667
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -84,6 +84,13 @@ AnimationClip:
     messageOptions: 0
   - time: 0.18333334
     functionName: PlayStepSound
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.9166667
+    functionName: 
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

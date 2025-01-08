@@ -148,7 +148,7 @@ SpriteRenderer:
   m_SortingLayerID: 955052221
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7616118921551313950, guid: cd51eb7beb222fa47828f05ce60c3922, type: 3}
+  m_Sprite: {fileID: 7458175263289308265, guid: ac7e9682c3d8b495dbaf47a4284d9ccb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -172,8 +172,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcsData:
-  - {fileID: 11400000, guid: ba3dca064e807754791a51b15e9fbee9, type: 2}
-  - {fileID: 11400000, guid: 447533a4a54917946b153e66ba5d4e43, type: 2}
+  - {fileID: 11400000, guid: 02cd268b27f8e4a98b9faba266a6f06b, type: 2}
+  - {fileID: 11400000, guid: e75ba42afa2bd4d93b5d362ba94fe0d7, type: 2}
+  - {fileID: 11400000, guid: 53c309a0511c944968f4d91a72d9eaa6, type: 2}
   typingSpeed: 0.05
 --- !u!58 &282853035
 CircleCollider2D:
@@ -204,8 +205,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.050666034, y: -0.03660202}
-  m_Size: {x: 0.6622274, y: 1.014595}
+  m_Offset: {x: 0.050666034, y: -0.04890442}
+  m_Size: {x: 0.6622274, y: 0.8369293}
   m_Direction: 0
 --- !u!50 &745851504755133106
 Rigidbody2D:

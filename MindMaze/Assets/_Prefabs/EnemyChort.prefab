@@ -281,7 +281,7 @@ SpriteRenderer:
   m_SortingLayerID: 955052221
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2323278601745609058, guid: 40b58b319ded876409ce4b3cd7ddb9d3, type: 3}
+  m_Sprite: {fileID: -5575259620138887894, guid: 9c6cb05a3d33e4ff4bc54919a426a385, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -485,7 +485,7 @@ MonoBehaviour:
   - {x: -0.16085815, y: -0.447892, z: 0}
   m_ShapePathHash: -1841398313
   m_Mesh: {fileID: 0}
-  m_InstanceId: 20154
+  m_InstanceId: 30128
 --- !u!1 &8562805970411843244
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,8 +737,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.011377931, y: 0.042975426}
-  m_Size: {x: 0.5016458, y: 1.0060673}
+  m_Offset: {x: -0.011377931, y: 0.0126648545}
+  m_Size: {x: 0.5016458, y: 0.77784646}
   m_Direction: 0
 --- !u!1 &8562805970926344241
 GameObject:
@@ -1249,6 +1249,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  <TakeDamageMultiplier>k__BackingField: 1
 --- !u!114 &8562805971988905147
 MonoBehaviour:
   m_ObjectHideFlags: 0

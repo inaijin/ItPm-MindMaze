@@ -12,9 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12e7204e9949aee4b8738c48cdbfb864, type: 3}
   m_Name: Shop1
   m_EditorClassIdentifier: 
-  sprite: {fileID: 3432901174953513207, guid: aae5977d1af33b54d99e49711753c497, type: 3}
+  sprite: {fileID: -6286954360436444883, guid: ec91a65a2928941088d99853d01984eb, type: 3}
   dialogLines:
-  - 1 beterek
-  - 2 bodo
-  - 3 secharkhe
-  - 4 nmd
+  - Man Shopam Taghato Mizanam
