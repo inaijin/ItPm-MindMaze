@@ -46,7 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce0df119b696c45389861011244a0bc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredKeys: 0
+  requiredKeys: 1
+  insufficientKeyDialog:
+  - i 1
+  - i 2
+  sufficientKeyDialog:
+  - s 1
+  - s 2
+  typingSpeed: 0.05
 --- !u!212 &2743394134836080786
 SpriteRenderer:
   m_ObjectHideFlags: 0
