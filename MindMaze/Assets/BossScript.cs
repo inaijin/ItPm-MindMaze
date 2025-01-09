@@ -6,6 +6,7 @@ public class BossScript : MonoBehaviour
 {
     public Animator animator; // Reference to the Animator
     public float detectionRadius = 5.0f; // Radius for detecting the player
+    [SerializeField] private GameObject hitBox;
 
     void Update()
     {
@@ -39,5 +40,15 @@ public class BossScript : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
+    }
+
+    public void EnabeleHitBox()
+    {
+        hitBox.SetActive(true);
+    }
+
+    public void DisableHitBox()
+    {
+        hitBox.SetActive(false);
     }
 }

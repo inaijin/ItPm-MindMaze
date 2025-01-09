@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: BossChort
   m_EditorClassIdentifier: 
   <MaxHealth>k__BackingField: 50
-  <Damage>k__BackingField: 3
+  <Damage>k__BackingField: 1

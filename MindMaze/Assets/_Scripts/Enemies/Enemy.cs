@@ -30,6 +30,8 @@ public class Enemy : MonoBehaviour, IHittable, IAgent, IKnockBack
 
     private bool hasIncreased = false;
 
+    [SerializeField] HealthBarUI uiHealth;
+
     private void Awake()
     {
         if (enemyAttack == null)
@@ -42,6 +44,7 @@ public class Enemy : MonoBehaviour, IHittable, IAgent, IKnockBack
     private void Start()
     {
         Health = EnemyData.MaxHealth;
+        uiHealth?.Initialized(EnemyData.MaxHealth);
     }
 
     public void GetHit(int damage, GameObject damageDealer)
@@ -57,6 +60,7 @@ public class Enemy : MonoBehaviour, IHittable, IAgent, IKnockBack
             // Apply damage multiplier
             int totalDamage = damage;
             Health -= totalDamage;
+            uiHealth?.UpdateHealth(Health);
 
             Debug.Log($"Enemy took {totalDamage} damage (Multiplier: {TakeDamageMultiplier})");
 
