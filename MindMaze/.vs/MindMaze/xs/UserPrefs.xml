@@ -1,18 +1,32 @@
 ﻿<Properties StartupConfiguration="{4816E900-C8B7-51D9-9536-EE7AC6310B52}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/_Scripts/RestartGame.cs">
-    <Files>
-      <File FileName="Assets/_Scripts/Enemies/EenemySpawner.cs" Line="96" Column="1" />
-      <File FileName="Assets/_Scripts/Enemies/Enemy.cs" Line="29" Column="27" />
-      <File FileName="Assets/_Scripts/Enemies/EnemyAIBrain.cs" Line="59" Column="1" />
-      <File FileName="Assets/_Scripts/Shop/ShopManager.cs" Line="130" Column="29" />
-      <File FileName="Assets/_Scripts/MainMenu.cs" Line="36" Column="2" />
-      <File FileName="Assets/_Scripts/RestartGame.cs" Line="12" Column="1" />
-      <File FileName="Assets/_Scripts/Door/DoorManager.cs" Line="69" Column="72" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="MindMaze" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="_Scripts" expanded="True">
+                <Node name="Enemies" expanded="True" />
+                <Node name="Feedback" expanded="True" />
+                <Node name="NPC" expanded="True" />
+                <Node name="Player" expanded="True" />
+                <Node name="UI" expanded="True" />
+                <Node name="AgentMovement.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="Unity" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="278e2228-8a1b-4e69-8986-dc174a72a7b2" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="e1bd9750-9e81-40f0-ae0d-69ec90e18fca" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

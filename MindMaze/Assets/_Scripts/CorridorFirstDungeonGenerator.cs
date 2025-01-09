@@ -38,6 +38,7 @@ public class CorridorFirstDungeonGenerator : AbstractDungeonGenerator
     private Vector3 playerSpawnPoint;
     private List<GameObject> spawnedObjects = new List<GameObject>();
     private HashSet<Vector2Int> occupiedPositions = new HashSet<Vector2Int>();
+    private Vector3 doorSpawnedPosition;
 
     // Dictionary to track floor types (true = room, false = corridor)
     private Dictionary<Vector2Int, bool> floorTypes = new Dictionary<Vector2Int, bool>();
@@ -86,7 +87,6 @@ public class CorridorFirstDungeonGenerator : AbstractDungeonGenerator
         // Common placement methods
         PlacePlayer(floorPositions);
         PlaceTorches(floorPositions);
-        SetupEnemySpawner(floorPositions);
         PlaceChests(floorPositions);
         PlaceNpcs(floorPositions);
 
@@ -98,6 +98,8 @@ public class CorridorFirstDungeonGenerator : AbstractDungeonGenerator
         {
             PlaceDoorNextToPlayer();
         }
+
+        SetupEnemySpawner(floorPositions);
     }
 
     // Methods from SimpleRandomWalkDungeonGenerator
@@ -119,6 +121,7 @@ public class CorridorFirstDungeonGenerator : AbstractDungeonGenerator
         }
 
         Vector3 worldPosition = new Vector3(doorPosition.x + 0.5f, doorPosition.y + 0.5f, 0);
+        doorSpawnedPosition = worldPosition;
         GameObject door = Instantiate(doorPrefab, worldPosition, Quaternion.identity);
         door.name = "ProceduralDoor";
 
@@ -149,6 +152,7 @@ public class CorridorFirstDungeonGenerator : AbstractDungeonGenerator
             if (!occupiedPositions.Contains(possiblePosition))
             {
                 Vector3 worldPosition = new Vector3(possiblePosition.x + 0.5f, possiblePosition.y + 0.5f, 0);
+                doorSpawnedPosition = worldPosition;
                 GameObject door = Instantiate(doorPrefab, worldPosition, Quaternion.identity);
                 door.name = "ProceduralDoor";
 
@@ -294,6 +298,26 @@ public class CorridorFirstDungeonGenerator : AbstractDungeonGenerator
         if (spawnerScript == null) return;
 
         ConfigureSpawnPoints(enemySpawner, spawnerScript, floorPositions);
+
+        // Calculate door position and spawn boss near the door
+        Vector3 doorPosition = GetDoorWorldPosition();
+        spawnerScript.SpawnBoss(doorSpawnedPosition);
+    }
+
+    private Vector3 GetDoorWorldPosition()
+    {
+        if (doorPrefab == null)
+        {
+            Debug.LogWarning("Door prefab is not assigned!");
+            return Vector3.zero;
+        }
+
+        if (doorPrefab != null)
+        {
+            return doorPrefab.transform.position; // Access the Transform from the GameObject
+        }
+
+        return Vector3.zero;
     }
 
     private void ConfigureSpawnPoints(GameObject spawnerInstance, EenemySpawner spawnerScript, HashSet<Vector2Int> floorPositions)

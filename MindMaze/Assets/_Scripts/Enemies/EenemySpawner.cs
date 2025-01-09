@@ -9,16 +9,29 @@ public class EenemySpawner : MonoBehaviour
     [SerializeField]
     private GameObject[] enemyList = new GameObject[4];
     [SerializeField]
+    private GameObject bossPrefab; // Boss prefab
+    [SerializeField]
     public List<EnemySpawnPoint> spawnPoints = new List<EnemySpawnPoint>();
     [SerializeField]
     private int count = 20;
     [SerializeField]
     private float minDelay = 0.8f, maxDelay = 1.5f;
 
+    [SerializeField]
+    private bool canSpawn = true; // Controls whether enemies can spawn
+    [SerializeField]
+    private bool bossSpawned = false; // Tracks if the boss has spawned
+
     IEnumerator SpawnCoroutine()
     {
         while (count > 0)
         {
+            if (!canSpawn) // Skip spawning if dialog is active
+            {
+                yield return null;
+                continue;
+            }
+
             count--;
             if (spawnPoints == null || spawnPoints.Count == 0)
             {
@@ -57,12 +70,25 @@ public class EenemySpawner : MonoBehaviour
             Debug.LogError("Enemy prefab is not assigned!");
             return;
         }
-        Debug.Log("enemy name : "+enemyPrefab.name);
+        Debug.Log("enemy name : " + enemyPrefab.name);
         Instantiate(
             enemyPrefab,
             spawnPoint.spawnPoint.transform.position,
             Quaternion.identity
         );
+    }
+
+    public void SpawnBoss(Vector3 doorPosition)
+    {
+        if (bossSpawned || bossPrefab == null)
+        {
+            Debug.LogWarning("Boss already spawned or prefab is null!");
+            return;
+        }
+
+        Instantiate(bossPrefab, doorPosition, Quaternion.identity);
+        Debug.Log("Boss spawned near the door!");
+        bossSpawned = true;
     }
 
     private void Start()
@@ -84,6 +110,11 @@ public class EenemySpawner : MonoBehaviour
         }
 
         StartCoroutine(SpawnCoroutine());
+    }
+
+    public void SetSpawningState(bool state)
+    {
+        canSpawn = state; // Enable or disable spawning
     }
 }
 

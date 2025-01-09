@@ -28,6 +28,8 @@ public class Enemy : MonoBehaviour, IHittable, IAgent, IKnockBack
     [field: SerializeField]
     public int TakeDamageMultiplier { get; set; } = 1; // Default to 1
 
+    private bool hasIncreased = false;
+
     private void Awake()
     {
         if (enemyAttack == null)
@@ -46,6 +48,12 @@ public class Enemy : MonoBehaviour, IHittable, IAgent, IKnockBack
     {
         if (!dead)
         {
+            if(!hasIncreased && EnemyData.MaxHealth / 2 >= Health && gameObject.CompareTag("Boss"))
+            {
+                hasIncreased = true;
+                agentMovemenet.increaseSpeed(2f);
+            }
+
             // Apply damage multiplier
             int totalDamage = damage;
             Health -= totalDamage;
@@ -77,6 +85,7 @@ public class Enemy : MonoBehaviour, IHittable, IAgent, IKnockBack
 
     public void KnockBack(Vector2 direction, float power, float duration)
     {
-        agentMovemenet.KnockBack(direction, power, duration);
+        if(!gameObject.CompareTag("Boss"))
+            agentMovemenet.KnockBack(direction, power, duration);
     }
 }

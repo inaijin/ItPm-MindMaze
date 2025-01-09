@@ -22,6 +22,8 @@ public class DialogManager : MonoBehaviour
     [SerializeField] private AudioSource audioSource; // AudioSource for playing typing sound
     [SerializeField] private AudioClip typingSound; // AudioClip for typing sound
     [SerializeField] private float typingSoundInterval = 0.1f; // Time between typing sound plays
+    [Range(0f, 1f)]
+    [SerializeField] private float typingSoundVolume = 0.5f; // Volume of the typing sound
 
     private bool isTyping = false;
     private float typingSpeed = 0.05f; // Default typing speed
@@ -158,7 +160,7 @@ public class DialogManager : MonoBehaviour
     {
         if (audioSource != null && typingSound != null && !audioSource.isPlaying)
         {
-            audioSource.PlayOneShot(typingSound);
+            audioSource.PlayOneShot(typingSound, typingSoundVolume); // Use the slider value for volume
         }
     }
 
@@ -187,10 +189,9 @@ public class DialogManager : MonoBehaviour
 
         OnDialogEnd?.Invoke(); // Trigger the dialog end event
     }
+
     public bool IsDialogActive()
     {
         return isDialogActive;
     }
-
-
 }

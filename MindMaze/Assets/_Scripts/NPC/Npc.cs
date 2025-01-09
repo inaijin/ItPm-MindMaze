@@ -18,10 +18,13 @@ public class Npc : MonoBehaviour
     private string[] dialogLines; // NPC-specific dialog lines
     public float typingSpeed = 0.05f; // Default typing speed, can be overridden
 
+    private EenemySpawner enemySpawner; // Reference to EnemySpawner
+
     private void Awake()
     {
         id = 0;
     }
+
     protected virtual void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -41,6 +44,13 @@ public class Npc : MonoBehaviour
         {
             Debug.LogWarning($"NpcDataSO is not assigned for {gameObject.name}");
         }
+
+        // Find the EnemySpawner in the scene
+        enemySpawner = FindObjectOfType<EenemySpawner>();
+        if (enemySpawner == null)
+        {
+            Debug.LogError("EnemySpawner not found in the scene!");
+        }
     }
 
     private void Update()
@@ -53,6 +63,12 @@ public class Npc : MonoBehaviour
         if (isPlayerNear && Input.GetKeyDown(KeyCode.E) && !DialogManager.Instance.IsDialogActive() && !ShopManager.Instance.isShopActive)
         {
             DialogManager.Instance.StartDialog(dialogLines, typingSpeed);
+
+            // Disable enemy spawning
+            if (enemySpawner != null)
+            {
+                enemySpawner.SetSpawningState(false);
+            }
         }
     }
 
@@ -70,6 +86,12 @@ public class Npc : MonoBehaviour
         {
             isPlayerNear = false;
             DialogManager.Instance.EndDialog();
+
+            // Enable enemy spawning
+            if (enemySpawner != null)
+            {
+                enemySpawner.SetSpawningState(true);
+            }
         }
     }
 }
