@@ -281,7 +281,7 @@ SpriteRenderer:
   m_SortingLayerID: 955052221
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8623939804438536664, guid: 7c84a035b555a4f49ab58c314be5a026, type: 3}
+  m_Sprite: {fileID: -8804577451312863447, guid: 6d820afd484b8494c81a8f939344a9fe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -485,7 +485,7 @@ MonoBehaviour:
   - {x: -0.16085815, y: -0.447892, z: 0}
   m_ShapePathHash: -1841398313
   m_Mesh: {fileID: 0}
-  m_InstanceId: 42332
+  m_InstanceId: 76848
 --- !u!1 &8562805970411843244
 GameObject:
   m_ObjectHideFlags: 0
@@ -693,6 +693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27cccb5a8a579b649a0c280716b22073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animation: {fileID: 0}
 --- !u!1 &8562805970851217140
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,8 +738,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.014513373, y: -0.019733906}
-  m_Size: {x: 0.43893647, y: 1.0123382}
+  m_Offset: {x: 0.26107895, y: -0.018185616}
+  m_Size: {x: 0.70523906, y: 0.89776564}
   m_Direction: 0
 --- !u!1 &8562805970926344241
 GameObject:
@@ -1047,6 +1048,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a535849dbefb214aafa00db0a5491fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animation: {fileID: 0}
 --- !u!1 &8562805971988905149
 GameObject:
   m_ObjectHideFlags: 0
@@ -1064,7 +1066,7 @@ GameObject:
   - component: {fileID: 8562805971988905124}
   m_Layer: 10
   m_Name: EnemyChort 2
-  m_TagString: Untagged
+  m_TagString: Enemy3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1124,6 +1126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <MovementData>k__BackingField: {fileID: 11400000, guid: ce7054fc13623c242a43d919becfa485, type: 2}
+  additionalSpeed: 0
   currentVelocity: 0
   <OnVelocityChange>k__BackingField:
     m_PersistentCalls:
@@ -1250,6 +1253,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   <TakeDamageMultiplier>k__BackingField: 1
+  uiHealth: {fileID: 0}
 --- !u!114 &8562805971988905147
 MonoBehaviour:
   m_ObjectHideFlags: 0

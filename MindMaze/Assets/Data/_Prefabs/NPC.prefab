@@ -172,8 +172,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcsData:
-  - {fileID: 11400000, guid: 02cd268b27f8e4a98b9faba266a6f06b, type: 2}
   - {fileID: 11400000, guid: e75ba42afa2bd4d93b5d362ba94fe0d7, type: 2}
+  - {fileID: 11400000, guid: 02cd268b27f8e4a98b9faba266a6f06b, type: 2}
   - {fileID: 11400000, guid: 53c309a0511c944968f4d91a72d9eaa6, type: 2}
   typingSpeed: 0.05
 --- !u!58 &282853035

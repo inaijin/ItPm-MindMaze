@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using TMPro;
 
 public class ShopManager : MonoBehaviour
 {
@@ -10,11 +11,20 @@ public class ShopManager : MonoBehaviour
 
     [Header("Shop UI Elements")]
     [SerializeField] private Canvas shopCanvas; // Reference to the shop canvas
+    [SerializeField]
+    private UIDamage uiKey = null;
+
+    [Header("Shop Notifications")]
+    [SerializeField] private TextMeshProUGUI insufficientCoinsText; // Notification for insufficient coins
+    [SerializeField] private TextMeshProUGUI upgradeLimitReachedText; // Notification for upgrade limit reached
 
     [Header("Shop Settings")]
     [SerializeField] private int healthPrice = 100;
     [SerializeField] private int ammoPrice = 50;
     [SerializeField] private int damagePrice = 200; // Price for increasing damage
+    [SerializeField] private int maxHealth = 5;
+    [SerializeField] private int maxDamage = 10;
+    [SerializeField] private int maxAmmo = 500;
 
     private Player player; // Reference to the player
     private Enemy[] enemies; // To update all enemies' multipliers
@@ -40,6 +50,24 @@ public class ShopManager : MonoBehaviour
         else
         {
             Debug.LogError("Shop Canvas is not assigned in ShopManager!");
+        }
+
+        if (insufficientCoinsText != null)
+        {
+            insufficientCoinsText.gameObject.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("Insufficient Coins Text is not assigned!");
+        }
+
+        if (upgradeLimitReachedText != null)
+        {
+            upgradeLimitReachedText.gameObject.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("Upgrade Limit Reached Text is not assigned!");
         }
     }
 
@@ -89,7 +117,7 @@ public class ShopManager : MonoBehaviour
 
     public void BuyHealth()
     {
-        if (player != null && player.coin >= healthPrice && player.maxHealth < 5)
+        if (player != null && player.coin >= healthPrice && player.maxHealth < maxHealth)
         {
             player.coin -= healthPrice;
             player.AddMaxHealth();
@@ -98,13 +126,20 @@ public class ShopManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Cannot purchase health. Insufficient coins or health is full.");
+            if (player.coin < healthPrice)
+            {
+                DisplayNotification(insufficientCoinsText);
+            }
+            else if (player.maxHealth >= maxHealth)
+            {
+                DisplayNotification(upgradeLimitReachedText);
+            }
         }
     }
 
     public void BuyMaxAmmo()
     {
-        if (player != null && player.coin >= ammoPrice && playerWeapon != null)
+        if (player != null && player.coin >= ammoPrice && playerWeapon != null && playerWeapon.Ammo < maxAmmo)
         {
             player.coin -= ammoPrice;
             playerWeapon.weaponData.AmmoCapacity += 10;
@@ -113,21 +148,47 @@ public class ShopManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Cannot purchase Max Ammo. Insufficient coins.");
+            if (playerWeapon.Ammo >= maxAmmo)
+                DisplayNotification(upgradeLimitReachedText);
+            else
+                DisplayNotification(insufficientCoinsText);
         }
     }
 
     public void BuyIncreaseDamage()
     {
-        if (player != null && player.coin >= damagePrice)
+        if (player != null && player.coin >= damagePrice && playerWeapon.additionalDamage < maxDamage)
         {
             player.coin -= damagePrice;
 
             playerWeapon.IncreaseDamage();
+            uiKey.UdpateDamageText(playerWeapon.additionalDamage);
+            Debug.Log("Weapon Damage Increased.");
         }
         else
         {
-            Debug.Log("Cannot purchase Damage increase. Insufficient coins.");
+            if (playerWeapon.additionalDamage >= maxDamage)
+                DisplayNotification(upgradeLimitReachedText);
+            else
+                DisplayNotification(insufficientCoinsText);
         }
+    }
+
+    private void DisplayNotification(TextMeshProUGUI text)
+    {
+        if (text != null)
+        {
+            text.gameObject.SetActive(true);
+            Invoke(nameof(HideNotification), 2f);
+        }
+    }
+
+    private void HideNotification()
+    {
+        if (insufficientCoinsText != null)
+            insufficientCoinsText.gameObject.SetActive(false);
+
+        if (upgradeLimitReachedText != null)
+            upgradeLimitReachedText.gameObject.SetActive(false);
     }
 }

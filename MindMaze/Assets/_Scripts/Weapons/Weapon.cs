@@ -16,7 +16,7 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     public WeaponDataSO weaponData;
 
-    private int additionalDamage = 0;
+    public int additionalDamage = 0;
 
     public int Ammo
     {

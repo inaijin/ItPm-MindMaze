@@ -8,10 +8,12 @@ public class Npc : MonoBehaviour
 
     [Header("Player Interaction")]
     private Transform player;
+    private GameObject playerItself;
     private SpriteRenderer spriteRenderer;
     protected bool isPlayerNear = false;
 
     private static int id = 0;
+    private bool isSamurai = false;
     private int _id;
 
     [Header("Dialog Settings")]
@@ -28,6 +30,7 @@ public class Npc : MonoBehaviour
     protected virtual void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        playerItself = GameObject.FindGameObjectsWithTag("Player")[0];
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         id++;
@@ -37,6 +40,7 @@ public class Npc : MonoBehaviour
         if (npcsData != null)
         {
             NpcDataSO npcData = npcsData[_id % npcsData.Length];
+            if(_id % npcsData.Length == 1) { isSamurai = true; }
             spriteRenderer.sprite = npcData.sprite; // Set the NPC's sprite
             dialogLines = npcData.dialogLines; // Load dialog lines
         }
@@ -63,6 +67,11 @@ public class Npc : MonoBehaviour
         if (isPlayerNear && Input.GetKeyDown(KeyCode.E) && !DialogManager.Instance.IsDialogActive() && !ShopManager.Instance.isShopActive)
         {
             DialogManager.Instance.StartDialog(dialogLines, typingSpeed);
+
+            if (isSamurai) { 
+                playerItself.GetComponent<Player>().markSamuraiAsSeen();
+                playerItself.GetComponent<Player>().updateKeyUIOWO();
+            }
 
             // Disable enemy spawning
             if (enemySpawner != null)

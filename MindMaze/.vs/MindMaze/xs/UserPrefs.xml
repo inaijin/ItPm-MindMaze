@@ -3,30 +3,14 @@
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="MindMaze" expanded="True">
-            <Node name="Assets" expanded="True">
-              <Node name="_Scripts" expanded="True">
-                <Node name="Enemies" expanded="True" />
-                <Node name="Feedback" expanded="True" />
-                <Node name="NPC" expanded="True" />
-                <Node name="Player" expanded="True" />
-                <Node name="UI" expanded="True" />
-                <Node name="AgentMovement.cs" selected="True" />
-              </Node>
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-      <Pad Id="MonoDevelop.UnitTesting.TestPad">
-        <State name="__root__">
-          <Node name="Unity" expanded="True" selected="True" />
+          <Node name="MindMaze" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="e1bd9750-9e81-40f0-ae0d-69ec90e18fca" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="5cfc1c86-e276-43fd-aa5c-597bd0e183f0" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

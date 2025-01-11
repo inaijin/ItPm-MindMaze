@@ -10,6 +10,8 @@ public class Player : MonoBehaviour, IAgent, IHittable
     public int numberOfKey = 0;
 
     private int _coin = 0;
+    private bool foundSamurai = false;
+
     public int coin 
     {
         get => _coin;
@@ -55,7 +57,7 @@ public class Player : MonoBehaviour, IAgent, IHittable
     private void Start()
     {
         numberOfKey = 0;
-        uiKey.UdpateKeyText(numberOfKey);
+        uiKey.UdpateKeyText(numberOfKey, foundSamurai);
         Health = maxHealth;
         uiHealth.Initialize(Health);
         coin = _coin;
@@ -83,6 +85,9 @@ public class Player : MonoBehaviour, IAgent, IHittable
         
     }
 
+    public void markSamuraiAsSeen() { foundSamurai = true; }
+    public void updateKeyUIOWO() { uiKey.UdpateKeyText(numberOfKey, foundSamurai); }
+
     public PlayerWeapon GetWeapon()
     {
         return playeWeapon;
@@ -90,7 +95,7 @@ public class Player : MonoBehaviour, IAgent, IHittable
     public void FindKey()
     {
         numberOfKey++;
-        uiKey.UdpateKeyText(numberOfKey);
+        uiKey.UdpateKeyText(numberOfKey, foundSamurai);
         Debug.Log("Key added! Total keys: " + numberOfKey);
     }
 

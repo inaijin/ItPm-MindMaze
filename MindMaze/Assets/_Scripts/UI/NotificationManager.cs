@@ -9,6 +9,8 @@ public class NotificationManager : MonoBehaviour
     [SerializeField] private GameObject notificationCanvas;
     [SerializeField] private float displayDuration = 2f; // Time to show the notification
 
+    private Coroutine activeNotificationCoroutine; // To track the currently running coroutine
+
     private void Awake()
     {
         if (Instance == null)
@@ -24,6 +26,19 @@ public class NotificationManager : MonoBehaviour
         {
             notificationCanvas.SetActive(false);
         }
+        else
+        {
+            Debug.LogWarning("Notification canvas is not assigned.");
+        }
+    }
+
+    private void Update()
+    {
+        // Check for the 'E' key to cancel the notification
+        if (notificationCanvas.activeSelf && Input.GetKeyDown(KeyCode.E))
+        {
+            EndNotification();
+        }
     }
 
     public void ShowNotification(string message)
@@ -36,23 +51,40 @@ public class NotificationManager : MonoBehaviour
 
         // Activate canvas and display the message
         notificationCanvas.SetActive(true);
-        // Assuming the canvas has a child Text or TMP_Text component for displaying messages
         var messageText = notificationCanvas.GetComponentInChildren<TextMeshProUGUI>();
         if (messageText != null)
         {
             messageText.text = message;
         }
 
-        // Start a coroutine to hide the canvas after a delay
-        StartCoroutine(HideNotificationAfterDelay());
+        // Cancel any active notification coroutine
+        if (activeNotificationCoroutine != null)
+        {
+            StopCoroutine(activeNotificationCoroutine);
+        }
+
+        // Start a new coroutine to hide the notification after a delay
+        activeNotificationCoroutine = StartCoroutine(HideNotificationAfterDelay());
     }
 
     private IEnumerator HideNotificationAfterDelay()
     {
         yield return new WaitForSeconds(displayDuration);
+        EndNotification();
+    }
+
+    private void EndNotification()
+    {
         if (notificationCanvas != null)
         {
             notificationCanvas.SetActive(false);
+        }
+
+        // Stop the active coroutine (if any)
+        if (activeNotificationCoroutine != null)
+        {
+            StopCoroutine(activeNotificationCoroutine);
+            activeNotificationCoroutine = null;
         }
     }
 }

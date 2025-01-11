@@ -89,7 +89,33 @@ public class Enemy : MonoBehaviour, IHittable, IAgent, IKnockBack
 
     public void KnockBack(Vector2 direction, float power, float duration)
     {
-        if(!gameObject.CompareTag("Boss"))
-            agentMovemenet.KnockBack(direction, power, duration);
+        switch (gameObject.tag)
+        {
+            case "Boss":
+                // Boss doesn't experience knockback
+                Debug.Log("Boss is immune to knockback.");
+                break;
+
+            case "Enemy1":
+                // Small enemies have lighter knockback
+                agentMovemenet.KnockBack(direction, power, duration);
+                break;
+
+            case "Enemy2":
+                // Medium enemies have normal knockback
+                agentMovemenet.KnockBack(direction, power * 0.5f, duration * 0.5f);
+                break;
+
+            case "Enemy3":
+                // Heavy enemies have reduced knockback
+                agentMovemenet.KnockBack(direction, power * 0.25f, duration * 0.25f);
+                break;
+
+            default:
+                // Default behavior for undefined tags
+                Debug.LogWarning("Tag not recognized, applying default knockback behavior.");
+                agentMovemenet.KnockBack(direction, power, duration);
+                break;
+        }
     }
 }

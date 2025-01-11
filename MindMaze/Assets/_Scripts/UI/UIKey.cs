@@ -8,8 +8,24 @@ public class UIKey : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI text = null;
 
-    public void UdpateKeyText(int keyCount)
+    public void UdpateKeyText(int keyCount, bool foundSamurai)
     {
-        text.SetText(keyCount.ToString());
+        if (foundSamurai)
+        {
+            text.SetText($"{keyCount}/10");
+            if (keyCount < 10)
+            {
+                text.color = Color.red; // Set text color to red when keys are less than 10
+            }
+            else
+            {
+                text.color = Color.green; // Set text color to green when keys are 10
+            }
+        }
+        else
+        {
+            text.SetText(keyCount.ToString());
+            text.color = Color.white; // Default text color when Samurai is not found
+        }
     }
 }
