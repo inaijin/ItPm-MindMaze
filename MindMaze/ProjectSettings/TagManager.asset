@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Boss
+  - Enemy1
+  - Enemy2
+  - Enemy3
+  - Generator
   layers:
   - Default
   - TransparentFX
@@ -20,7 +25,7 @@ TagManager:
   - EnemyMovementCollider
   - PlayerMovementCollider
   - Resource
-  - 
+  - NPC
   - 
   - 
   - 
@@ -55,4 +60,10 @@ TagManager:
     locked: 0
   - name: Bullets
     uniqueID: 1862908085
+    locked: 0
+  - name: UI
+    uniqueID: 134247525
+    locked: 0
+  - name: up
+    uniqueID: 3563482513
     locked: 0

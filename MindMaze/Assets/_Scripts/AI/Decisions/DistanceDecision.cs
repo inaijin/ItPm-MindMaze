@@ -10,12 +10,12 @@ public class DistanceDecision : AIDecision
 
     public override bool MakeADecision()
     {
-        if(Vector3.Distance(enemyBrain.Target.transform.position, transform.position) < Distance)
+        if (Vector3.Distance(enemyBrain.Target.transform.position, transform.position) < Distance)
         {
             if (aiActionData.TargetSpotted == false)
             {
                 aiActionData.TargetSpotted = true;
-            } 
+            }
         }
         else
         {
@@ -26,11 +26,13 @@ public class DistanceDecision : AIDecision
 
     protected void OnDrawGizmos()
     {
-        if(UnityEditor.Selection.activeObject == gameObject)
+#if UNITY_EDITOR
+        if (UnityEditor.Selection.activeObject == gameObject)
         {
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(transform.position, Distance);
             Gizmos.color = Color.white;
         }
+#endif
     }
 }

@@ -10,7 +10,7 @@ public class UIHealth : MonoBehaviour
     [SerializeField]
     private Sprite heartFull = null, heartEmpty = null;
 
-    private int heartCount = 0;
+    public int heartCount = 0;
 
     private List<Image> hearts = new List<Image>();
 
@@ -42,5 +42,13 @@ public class UIHealth : MonoBehaviour
             }
             currentIndex++;
         }
+    }
+
+    public void AddMaxUI()
+    {
+        heartCount++;
+        Image heart = Instantiate(heartPrefab, healthPanel.transform).GetComponent<Image>();
+        heart.sprite = heartEmpty;
+        hearts.Add(heart);
     }
 }

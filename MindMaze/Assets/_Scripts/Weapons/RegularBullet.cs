@@ -6,6 +6,7 @@ public class RegularBullet : Bullet
 {
     protected Rigidbody2D rigidBody2d;
     private bool isDead = false;
+    public int additionalDamage = 0;
 
     public override BulletDataSO BulletData 
     { 
@@ -32,7 +33,7 @@ public class RegularBullet : Bullet
             return;
         isDead = true;
         var hittable = collision.GetComponent<IHittable>();
-        hittable?.GetHit(bulletData.Damage, gameObject);
+        hittable?.GetHit((bulletData.Damage + additionalDamage), gameObject);
         if(collision.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
             HitObstacle(collision);

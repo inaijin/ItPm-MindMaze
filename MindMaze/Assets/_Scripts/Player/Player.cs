@@ -6,7 +6,22 @@ using UnityEngine.Events;
 public class Player : MonoBehaviour, IAgent, IHittable
 {
     [SerializeField]
-    private int maxHealth = 2;
+    public int maxHealth = 3;
+    public int numberOfKey = 0;
+
+    private int _coin = 0;
+    private bool foundSamurai = false;
+
+    public int coin 
+    {
+        get => _coin;
+        set 
+        {
+            _coin = value;
+            uiCoin.UpdateCoinText(_coin);
+
+        } 
+    }
 
     private int health;
     public int Health { 
@@ -18,12 +33,17 @@ public class Player : MonoBehaviour, IAgent, IHittable
         } 
     }
 
-    private bool dead = false;
+    public bool dead = false;
 
     private PlayerWeapon playeWeapon;
 
     [field: SerializeField]
     public UIHealth uiHealth { get; set; }
+
+    public UICoin uiCoin = null;
+
+    [SerializeField]
+    private UIKey uiKey = null;
 
     [field: SerializeField]
     public UnityEvent OnDie { get; set; }
@@ -36,14 +56,23 @@ public class Player : MonoBehaviour, IAgent, IHittable
     }
     private void Start()
     {
+        numberOfKey = 0;
+        uiKey.UdpateKeyText(numberOfKey, foundSamurai);
         Health = maxHealth;
         uiHealth.Initialize(Health);
+        coin = _coin;
+    }
+
+    public void AddMaxHealth()
+    {
+        maxHealth++;
+        uiHealth.AddMaxUI();
     }
     public void GetHit(int damage, GameObject damageDealer)
     {
         if(dead == false)
         {
-            Health--;
+            Health -= damage;
             OnGetHit?.Invoke();
             if (Health <= 0)
             {
@@ -54,6 +83,20 @@ public class Player : MonoBehaviour, IAgent, IHittable
         }
         
         
+    }
+
+    public void markSamuraiAsSeen() { foundSamurai = true; }
+    public void updateKeyUIOWO() { uiKey.UdpateKeyText(numberOfKey, foundSamurai); }
+
+    public PlayerWeapon GetWeapon()
+    {
+        return playeWeapon;
+    }
+    public void FindKey()
+    {
+        numberOfKey++;
+        uiKey.UdpateKeyText(numberOfKey, foundSamurai);
+        Debug.Log("Key added! Total keys: " + numberOfKey);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -79,6 +122,10 @@ public class Player : MonoBehaviour, IAgent, IHittable
                             return;
                         }
                         playeWeapon.AddAmmo(resource.ResourceData.GetAmount());
+                        resource.PickUpResource();
+                        break;
+                    case ResourceTypeEnum.Coin:
+                        coin += resource.ResourceData.GetAmount();
                         resource.PickUpResource();
                         break;
                     default:

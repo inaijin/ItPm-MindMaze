@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90fe83b027363e541b45ab12bc6e1cf3, type: 3}
+  m_Name: ChestNotifications
+  m_EditorClassIdentifier: 
+  messages:
+  - Within the tempest of your mind, there lies a storm of emotions. Acknowledging
+    its presence is the first step toward finding peace. By recognizing the storm,
+    you give yourself permission to feel, to understand, and to begin the journey
+    toward calm.
+  - 'The circles of light are the moments of clarity and hope that surround you even
+    in your darkest hours. Let these moments guide you, for they are beacons of strength
+    and resilience, helping you navigate through the shadows of doubt and fear.
+
+'
+  - 'In the silence of your thoughts, practice the kindness you extend to others.
+    Speak to yourself with the same compassion and understanding you would offer
+    a friend, for self-compassion is the foundation of healing and growth.
+
+'
+  - 'The path through the labyrinth is not about reaching the end, but about the
+    steps you take along the way. Embrace the journey, for it is in each step that
+    you discover strength and wisdom.
+
+'
+  - 'Take a moment to pause, to breathe, and in that stillness, find the space to
+    observe your thoughts and emotions without judgment. This pause is a gateway
+    to mindfulness and inner peace.
+
+'
+  - Allow yourself the nourishment of rest, for it is in the quiet moments of renewal
+    that your strength takes root and grows. Rest is not a weakness, but a necessary
+    part of your journey.
+  - 'The shadows that loom in your mind may not all be real. Question their nature,
+    for sometimes, what seems threatening is merely a distortion of fear. By questioning,
+    you gain clarity and courage.
+
+'
+  - 'Each step you take, no matter how insignificant it may seem, contributes to
+    the path of your journey. Celebrate the small victories, for they are the building
+    blocks of your progress.
+
+'
+  - 'Protect your inner light by knowing when to set boundaries. Just as a flame
+    needs shelter, your spirit requires protection from what would dim its glow.
+
+'
+  - Do not isolate yourself in the labyrinth of your mind. Reach out for support,
+    for there are hands ready to lend strength and guide you through the maze. Connection
+    is a source of power.

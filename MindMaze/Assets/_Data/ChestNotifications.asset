@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90fe83b027363e541b45ab12bc6e1cf3, type: 3}
+  m_Name: ChestNotifications
+  m_EditorClassIdentifier: 
+  messages:
+  - Understanding yourself is the first step to healing. Take time to notice how
+    you feel and what you need.
+  - "It\u2019s okay to not be okay. Struggles don\u2019t make you weak\u2014they
+    make you human."
+  - "Sharing your feelings can lighten the load. Talk to someone you trust\u2014a
+    friend, family member, or\r\nprofessional."
+  - "Seeking help for your mental health is as important as treating a physical injury.
+    There\u2019s no shame in it."
+  - Your mind needs rest as much as your body. Prioritize sleep, relaxation, and
+    time for yourself.
+  - "Healing isn\u2019t linear. Celebrate small victories and be patient with yourself."
+  - 'Physical activity boosts your mood and helps reduce stress. Even a short walk
+    can make a big
+
+    difference.'
+  - "Saying \u2018no\u2019 is a form of self-care. Protect your energy and prioritize
+    what matters most to you."
+  - Focus on what you can control and appreciate small positives. Gratitude can shift
+    your mindset.
+  - "You\u2019re not alone in this. Others have walked this path and come out stronger\u2014you
+    can too."

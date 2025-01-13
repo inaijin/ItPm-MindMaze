@@ -22,11 +22,20 @@ public class ItemDropper : MonoBehaviour
 
     public void DropItem()
     {
-        var dropVariable = Random.value;
-        if(dropVariable < dropChance)
+        if (gameObject.CompareTag("Boss"))
         {
-            int index = GetRandomWeightedIndex(itemWeights);
-            Instantiate(itemsToDrop[index].itemPrefab, transform.position, Quaternion.identity);
+            for(int i = 0; i < 11; i++)
+            {
+                Instantiate(itemsToDrop[2].itemPrefab, transform.position, Quaternion.identity);
+            }
+        } else
+        {
+            var dropVariable = Random.value;
+            if (dropVariable < dropChance)
+            {
+                int index = GetRandomWeightedIndex(itemWeights);
+                Instantiate(itemsToDrop[index].itemPrefab, transform.position, Quaternion.identity);
+            }
         }
     }
 

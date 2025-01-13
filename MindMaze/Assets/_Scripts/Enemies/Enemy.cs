@@ -24,33 +24,54 @@ public class Enemy : MonoBehaviour, IHittable, IAgent, IKnockBack
     [field: SerializeField]
     public UnityEvent OnDie { get; set; }
 
+    // New Field for Damage Multiplier
+    [field: SerializeField]
+    public int TakeDamageMultiplier { get; set; } = 1; // Default to 1
+
+    private bool hasIncreased = false;
+
+    [SerializeField] HealthBarUI uiHealth;
+
     private void Awake()
     {
-        if(enemyAttack == null)
+        if (enemyAttack == null)
         {
             enemyAttack = GetComponent<EnemyAttack>();
         }
         agentMovemenet = GetComponent<AgentMovement>();
     }
+
     private void Start()
     {
         Health = EnemyData.MaxHealth;
+        uiHealth?.Initialized(EnemyData.MaxHealth);
     }
 
     public void GetHit(int damage, GameObject damageDealer)
     {
-        if(dead == false)
+        if (!dead)
         {
-            Health--;
+            if(!hasIncreased && EnemyData.MaxHealth / 2 >= Health && gameObject.CompareTag("Boss"))
+            {
+                hasIncreased = true;
+                agentMovemenet.increaseSpeed(2f);
+            }
+
+            // Apply damage multiplier
+            int totalDamage = damage;
+            Health -= totalDamage;
+            uiHealth?.UpdateHealth(Health);
+
+            Debug.Log($"Enemy took {totalDamage} damage (Multiplier: {TakeDamageMultiplier})");
+
             OnGetHit?.Invoke();
+
             if (Health <= 0)
             {
                 dead = true;
                 OnDie?.Invoke();
-
             }
         }
-        
     }
 
     public void Die()
@@ -60,7 +81,7 @@ public class Enemy : MonoBehaviour, IHittable, IAgent, IKnockBack
 
     public void PerformAttack()
     {
-        if (dead == false)
+        if (!dead)
         {
             enemyAttack.Attack(EnemyData.Damage);
         }
@@ -68,6 +89,33 @@ public class Enemy : MonoBehaviour, IHittable, IAgent, IKnockBack
 
     public void KnockBack(Vector2 direction, float power, float duration)
     {
-        agentMovemenet.KnockBack(direction, power, duration);
+        switch (gameObject.tag)
+        {
+            case "Boss":
+                // Boss doesn't experience knockback
+                Debug.Log("Boss is immune to knockback.");
+                break;
+
+            case "Enemy1":
+                // Small enemies have lighter knockback
+                agentMovemenet.KnockBack(direction, power, duration);
+                break;
+
+            case "Enemy2":
+                // Medium enemies have normal knockback
+                agentMovemenet.KnockBack(direction, power * 0.5f, duration * 0.5f);
+                break;
+
+            case "Enemy3":
+                // Heavy enemies have reduced knockback
+                agentMovemenet.KnockBack(direction, power * 0.25f, duration * 0.25f);
+                break;
+
+            default:
+                // Default behavior for undefined tags
+                Debug.LogWarning("Tag not recognized, applying default knockback behavior.");
+                agentMovemenet.KnockBack(direction, power, duration);
+                break;
+        }
     }
 }

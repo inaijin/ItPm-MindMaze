@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6aaeef34e94441459fe47ec65394482, type: 3}
   m_Name: EnemyChordData
   m_EditorClassIdentifier: 
-  <MaxHealth>k__BackingField: 2
+  <MaxHealth>k__BackingField: 3
   <Damage>k__BackingField: 1

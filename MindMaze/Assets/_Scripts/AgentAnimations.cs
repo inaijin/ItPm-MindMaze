@@ -6,9 +6,11 @@ using UnityEngine;
 public class AgentAnimations : MonoBehaviour
 {
     protected Animator agentAnimator;
+    private EnemyAIBrain enemyBrain;
 
     private void Awake()
     {
+        enemyBrain = transform.root.GetComponent<EnemyAIBrain>();
         agentAnimator = GetComponent<Animator>();
     }
 
@@ -25,5 +27,27 @@ public class AgentAnimations : MonoBehaviour
     public void PlayDeathAnimation()
     {
         agentAnimator.SetTrigger("Death");
+    }
+
+    public void PlayAttackAnimation()
+    {
+        if(agentAnimator.GetBool("isNearPlayer") == false)
+        {
+            agentAnimator.SetBool("isNearPlayer", true);
+        }
+        
+    }
+
+    public void StopAttackAnimation()
+    {
+        if (agentAnimator.GetBool("isNearPlayer") == true)
+        {
+            agentAnimator.SetBool("isNearPlayer", false);
+        }
+    }
+
+    public void Attack()
+    {
+        enemyBrain.Attack();
     }
 }

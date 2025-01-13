@@ -13,6 +13,9 @@ public class AgentMovement : MonoBehaviour
     public MovementDataSO MovementData { get; set; }
 
     [SerializeField]
+    private float additionalSpeed = 0;
+
+    [SerializeField]
     protected float currentVelocity = 3;
     protected Vector2 movementDirection;
 
@@ -20,6 +23,10 @@ public class AgentMovement : MonoBehaviour
 
     [field: SerializeField]
     public UnityEvent<float> OnVelocityChange { get; set; }
+
+    public void increaseSpeed(float ammount) {
+        additionalSpeed += ammount;
+    }
 
     private void Awake()
     {
@@ -37,13 +44,13 @@ public class AgentMovement : MonoBehaviour
     {
         if(movementInput.magnitude > 0)
         {
-            currentVelocity += MovementData.acceleration * Time.deltaTime;
+            currentVelocity += (MovementData.acceleration + additionalSpeed) * Time.deltaTime;
         }
         else
         {
-            currentVelocity -= MovementData.deacceleration * Time.deltaTime;
+            currentVelocity -= (MovementData.deacceleration + additionalSpeed) * Time.deltaTime;
         }
-        return Mathf.Clamp(currentVelocity, 0, MovementData.maxSpeed);
+        return Mathf.Clamp(currentVelocity, 0, MovementData.maxSpeed + additionalSpeed);
     }
 
     private void FixedUpdate()

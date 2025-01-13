@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12e7204e9949aee4b8738c48cdbfb864, type: 3}
+  m_Name: Viking
+  m_EditorClassIdentifier: 
+  sprite: {fileID: -2009841120776313706, guid: 2df8ac210ef254189b8e2852730b3a30, type: 3}
+  dialogLines:
+  - "You think the enemies here are fierce? Venture further, and you\u2019ll find
+    out what real battles look like."
+  - The further you stray from where you began, the darker the shadows become.
+  - "A true warrior doesn\u2019t shrink from the storm. They press forward, even
+    as the winds howl."
+  - Strength is earned, not given. The greatest tests lie far from the safety of
+    where you started.
+  - "The harder the battle, the greater the glory. Do not fear what lies ahead\u2014fear
+    standing still."
