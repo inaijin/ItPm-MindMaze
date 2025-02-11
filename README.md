@@ -1,70 +1,96 @@
-# Procedural Dungeon Adventure
+# MindMaze
+
+**MindMaze** is a 2D pixel-art roguelike shooter that combines fast-paced, top-down combat with a narrative exploring mental health. Every run presents new challenges through procedurally generated levels, ensuring a unique experience each time you play.  
+[Download MindMaze on itch.io](https://inaijin.itch.io/mindmaze)
+
+---
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [Project Structure](#project-structure)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [Acknowledgements](#acknowledgements)
+
+---
 
 ## Overview
-Procedural Dungeon Adventure is a 2D top-down action game that combines procedurally generated dungeons, intense combat, and exploration. Each dungeon is uniquely generated with randomized layouts, enemies, lights, and treasure, ensuring a fresh experience every time you play.
 
-## Features
-- **Procedural Dungeon Generation**: Randomly generated dungeon layouts using Simple Random Walk algorithms.
-- **Dynamic Lighting**: Torches are dynamically placed in dungeons for immersive lighting effects.
-- **Combat System**: Engage in combat with enemies using powerful weapons and abilities.
-- **Enemy Spawners**: Enemies spawn dynamically from pre-defined points in each dungeon.
-- **Customizable Gameplay**: Easily tweak dungeon parameters such as size, enemy count, and lighting frequency.
-- **Unity 2D**: Built entirely using Unity's 2D tools and physics system.
+MindMaze is a downloadable game for Windows that challenges players with its mix of intense action and deep narrative elements. Designed with procedural generation, no two playthroughs are alike. This repository contains the project files including source code, assets, and configuration files needed to build and modify the game.
 
-## Gameplay
-- Explore procedurally generated dungeons filled with torches and enemy spawners.
-- Fight waves of enemies using various weapons.
-- Survive and reach the end of the dungeon to progress to the next level.
+---
 
-## Screenshots
-Include some of your game's best screenshots here:
-1. A procedurally generated dungeon layout.
-2. Torch and lighting effects in the dungeon.
-3. Combat with enemies.
+## Key Features
+
+- **Procedural Generation:** Explore dynamically generated levels with unique layouts, enemies, and surprises.
+- **Dynamic Combat:** Engage in intense, top-down shooting with a variety of weapons and power-ups.
+- **Meaningful Narrative:** Experience a story that thoughtfully explores the challenges of mental health.
+- **Roguelike Elements:** Embrace permadeath and discover new abilities with each run.
+- **Handcrafted Pixel Art:** Enjoy meticulously created 2D environments that bring the game world to life.
+
+---
+
+## Project Structure
+
+Below is an example of the directory layout. Adjust this to reflect your actual file organization:
+
+```
+MindMaze/
+├── Assets/              # Art, audio, and other media assets
+├── Scripts/             # Source code for game mechanics, AI, and utilities
+├── Levels/              # Data and configuration for procedural level generation
+├── Build/               # Compiled builds (e.g., Windows executable)
+├── Docs/                # Documentation and design notes
+├── README.md            # This file
+└── LICENSE              # License information
+```
+---
 
 ## Installation
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/your-username/procedural-dungeon-adventure.git
-    ```
-2. Open the project in Unity (tested with Unity 2019 and above).
-3. Ensure all necessary assets and packages are imported.
-4. Press `Play` in the Unity Editor to start the game.
 
-## Controls
-- **Movement**: Arrow keys or WASD.
-- **Shoot**: Left Mouse Button / Spacebar.
-- **Interact**: E (if applicable).
+### For Players
+1. **Download:** Get the latest release from [itch.io](https://inaijin.itch.io/mindmaze).
+2. **Extract:** Unzip the downloaded `MindMaze.zip` file.
+3. **Play:** Run the executable found in the `/Build` folder.  
+   *Installation is as simple as "Just Unzip and Play!"*
 
-## How It Works
-### Procedural Generation
-- **Algorithm**: The Simple Random Walk algorithm is used to create unique dungeon layouts.
-- **Lights and Spawners**: Torches and enemy spawners are dynamically placed on valid floor tiles.
+### For Developers
+1. **Clone the Repository:**  
+   ```bash
+   git clone https://github.com/your-username/MindMaze.git
+   ```
+2. **Setup:** Open the project in your preferred game engine or IDE. (Refer to any engine-specific instructions in the `/Docs` folder.)
+3. **Build:** Follow the build instructions provided in the documentation to compile the game.
 
-### Combat System
-- **Weapons**: Players can use weapons with varying fire rates and damage.
-- **Enemy Spawning**: Enemies spawn dynamically from designated points in the dungeon.
+---
+
+## Usage
+
+After installation, launch the game and enjoy a procedurally generated journey through challenging levels. Experiment with different weapons, master dynamic combat, and immerse yourself in a narrative that goes beyond typical action games.
+
+---
 
 ## Contributing
-Contributions are welcome! If you’d like to improve this game, follow these steps:
+
+Contributions are welcome! If you’d like to help improve MindMaze, please follow these guidelines:
+
 1. Fork the repository.
-2. Create a feature branch:
-    ```bash
-    git checkout -b feature-name
-    ```
-3. Commit your changes:
-    ```bash
-    git commit -m "Add feature"
-    ```
-4. Push to the branch:
-    ```bash
-    git push origin feature-name
-    ```
-5. Open a Pull Request.
+2. Create a new branch for your feature or bug fix.
+3. Ensure your code adheres to the project’s coding style.
+4. Submit a pull request with a detailed description of your changes.
 
-## License
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+For larger changes, please open an issue first to discuss what you would like to modify.
 
-## Acknowledgments
-- Unity Engine: For providing the tools and environment to build the game.
-- Open-source contributors: For inspiration and libraries.
+---
+
+## Acknowledgements
+
+- Special thanks to [Hesam](https://github.com/hesamhrf) for helping in creating MindMaze.
+- Thanks to the community for support, feedback, and contributions.
+
+---
+
+*For any questions or additional information, feel free to open an issue or contact the maintainer.*
